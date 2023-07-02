@@ -1,0 +1,25 @@
+<!---->
+<div bsModal #reasonOfRefusal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="reasonOfRefusal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog dv-mg-top">
+        <div class="modal-content dv-size-popup">
+            <div class="modal-body body-agree">
+                <!-- <diV class="dv-rim"> -->
+                    <div class="div-box">
+                        <div class="dv-icon-warning">
+                            <i class="fa fa-exclamation-triangle i-icon-format" aria-hidden="true"></i>
+                        </div>
+                        <div class="dv-message">
+                            <span>
+                                <h4>{{message1}}</h4>
+                            </span>
+                        </div>
+                        <button class="btn-agree" type="button" (click)="close()" class="btn btn-primary">
+                            <span>{{"Agree" | localize}}</span>
+                        </button>
+                    </div>
+                <!-- </diV> -->
+            </div>
+        </div>
+    </div>
+</div>

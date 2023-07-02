@@ -1,0 +1,375 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form [formGroup]="requestAssetForm" *ngIf="requestAssetForm" novalidate autocomplete="off"
+                #mstSleDeliveryPlaceForm="ngForm">
+
+                <div class="modal-header modal-header-employees-learned">
+                    <div style="width: 50%">
+                        <h5 class="modal-title" style="margin-left: 15px;">
+                            <span *ngIf="isEdit">{{l("Edit")}}</span>
+                            <span *ngIf="!isEdit">{{titleRequest}}</span>
+                        </h5>
+                    </div>
+                    <!-- <div class="dv-body-import-excel" *ngIf="typeRequest != 1">
+                        <div class="dv-form-import">
+                            <div class="btn-group" dropdown>
+                                <button dropdownToggle type="button"
+                                    class="btn btn-outline-success dropdown-toggle mr-1" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="far fa-file-excel"></i> {{"ImportRequestFromExcel" | localize}}
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-excel-operations" *dropdownMenu>
+                                    <a href="javascript:;" class="no-padding" class="a-import-excel">
+                                        <span class="fileinput-button span-upload">
+                                            <p-fileUpload customUpload="true" name="ExcelFileUpload" #ExcelFileUpload
+                                                maxFileSize="10000000" auto="auto" accept=".csv,.xls,.xlsx"
+                                                (uploadHandler)="uploadExcel($event)" (onError)="onUploadExcelError()"
+                                                chooseLabel="{{'ImportFromExcel' | localize}}">
+                                            </p-fileUpload>
+                                        </span>
+                                    </a>
+                                    <span class="dropdown-item-text text-muted pl-3" href="#">
+                                        <small *ngIf="typeRequest == 2"
+                                            [innerHTML]="l('ImportToExcelSampleFileDownloadInfo', '<a href=/assets/sampleFiles/Import_All_Info_Request_Vender_Employees.xlsx>' + l('ClickHere') + '</a>')">
+                                        </small>
+                                        <small *ngIf="typeRequest == 3"
+                                            [innerHTML]="l('ImportToExcelSampleFileDownloadInfo', '<a href=/assets/sampleFiles/Import_All_Info_Request_Vender_Asset.xlsx>' + l('ClickHere') + '</a>')">
+                                        </small>
+                                        <small *ngIf="typeRequest == 4"
+                                            [innerHTML]="l('ImportToExcelSampleFileDownloadInfo', '<a href=/assets/sampleFiles/Import_All_Info_Request_Client.xlsx>' + l('ClickHere') + '</a>')">
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <button type="button" style="margin-right: 1% !important;" class="close" (click)="close()"
+                        [attr.aria-label]="l('Close')">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body modal-boddy-employees-learned" *ngIf="active">
+                    <div [class]="" [busyIf]="isLoading">
+
+                        <div class="card card-custom gutter-b">
+                            <div class="card-body">
+                                <h5> {{l('GenaralInfomation')}}</h5>
+                                <div class="form-genaral-info dv-padding-left">
+                                    <div class="row distance-row">
+                                        <div class="col-xl-6 col-sm-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text left-text sp-width height-input-request">
+                                                    {{'UserName' |
+                                                    localize}}</span>
+                                                <input formControlName="userName" autoFocus [value]="userName"
+                                                    [ngModel]="userName"
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text" disabled="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-sm-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text left-text sp-width height-input-request">
+                                                    {{'Department' |
+                                                    localize}}</span>
+                                                <input formControlName="department" autoFocus [ngModel]="department"
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text" disabled="true">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="row distance-row">
+                                        <div class="col-xl-6 col-sm-12">
+                                            <div class="input-group date-p-calendar">
+                                                <span class="input-group-text left-text sp-width height-input-request">
+                                                    {{'DateManageApproval' |
+                                                    localize}}</span>
+                                                <input formControlName="dateManageApproval" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text" disabled="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-sm-12">
+                                            <div class="input-group date-p-calendar">
+                                                <span class="input-group-text left-text height-input-request sp-width">
+                                                    {{'DateAdminApproval' |
+                                                    localize}}</span>
+                                                <input formControlName="dateAdminApproval" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text" disabled="true">
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="row distance-row">
+                                        <div class="col-xl-12 col-sm-12">
+                                            <div class="input-group">
+                                                <span
+                                                    class="input-group-text left-text sp-width-1 height-input-request">
+                                                    {{'TypeRequest' |
+                                                    localize}}</span>
+                                                <input formControlName="typeRequestName" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [value]="typeRequestName" [ngModel]="typeRequestName" disabled
+                                                    [placeholder]="l('')" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-custom gutter-b">
+                            <div class="card-body">
+                                <div class="dv-row-title">
+                                    <div style="width: 50%;">
+                                        <h5> {{l('RequestInfomation')}}</h5>
+                                    </div>
+                                </div>
+
+                                <div class="form-genaral-info dv-padding-left">
+                                    <div class="row distance-row">
+                                        <div class="col-xl-12 col-sm-12">
+                                            <div class="input-group">
+                                                <span
+                                                    class="input-group-text left-text sp-width-1 height-input-request">
+                                                    {{'TitleRequest' |
+                                                    localize}}<span class="sp-color">*</span></span>
+                                                <input formControlName="title" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text">
+                                            </div>
+                                            <validation-messages [formCtrl]="requestAssetForm.get('title')">
+                                            </validation-messages>
+                                        </div>
+                                    </div>
+
+                                    <div class="row distance-row" *ngIf="typeRequest == 4">
+                                        <div class="col-xl-12 col-sm-12">
+                                            <div class="input-group">
+                                                <span
+                                                    class="input-group-text left-text sp-width-1 height-input-request">
+                                                    {{'TradeUnionOrganization' |
+                                                    localize}}<span class="sp-color">*</span></span>
+                                                <input formControlName="tradeUnionOrganization" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text">
+                                            </div>
+                                            <validation-messages
+                                                [formCtrl]="requestAssetForm.get('tradeUnionOrganization')">
+                                            </validation-messages>
+                                        </div>
+                                    </div>
+
+                                    <div class="row distance-row dv-vender"
+                                        *ngIf="typeRequest != 1 && typeRequest != 4">
+                                        <div class="col-xl-12 col-sm-12">
+                                            <div class="input-group">
+                                                <span
+                                                    class="input-group-text left-text sp-width-1 height-input-request">
+                                                    {{'VenderName' | localize}}<span class="sp-color">*</span></span>
+                                                <!-- <select autoFocus size="1" formControlName="venderId"
+                                                    class="form-control height-input-request">
+                                                    <option *ngFor="let vender of listVenderDropDown"
+                                                        [value]="vender.value">
+                                                        {{vender.label}}</option>
+                                                </select> -->
+                                                <p-dropdown formControlName="venderId"
+                                                    class="p-propdown-input-request-edit" name="venderId"
+                                                    [options]="listVenderDropDown" optionLabel="label"
+                                                    optionValue="value" [filter]="true" filterBy="label"
+                                                    placeholder="{{selectVender}}">
+                                                </p-dropdown>
+                                            </div>
+                                            <validation-messages [formCtrl]="requestAssetForm.get('venderId')">
+                                            </validation-messages>
+                                        </div>
+                                    </div>
+
+                                    <div class="row distance-row">
+                                        <div class="col-xl-6 col-sm-12">
+                                            <div class="input-group">
+                                                <span *ngIf="typeRequest ==1 || typeRequest ==3"
+                                                    class="input-group-text left-text sp-width height-input-request">
+                                                    {{'PersonSignAsset' |
+                                                    localize}}<span class="sp-color">*</span></span>
+
+                                                <span *ngIf="typeRequest ==2"
+                                                    class="input-group-text left-text sp-width height-input-request">
+                                                    {{'PersonInChargeOfSubName' |
+                                                    localize}}<span class="sp-color">*</span></span>
+
+                                                <span *ngIf="typeRequest ==4"
+                                                    class="input-group-text left-text sp-width height-input-request">
+                                                    {{'RegisterRepresentative' |
+                                                    localize}}<span class="sp-color">*</span></span>
+
+                                                <input formControlName="personInChargeOfSubName" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text">
+                                            </div>
+                                            <validation-messages
+                                                [formCtrl]="requestAssetForm.get('personInChargeOfSubName')">
+                                            </validation-messages>
+                                        </div>
+                                        <div class="col-xl-6 col-sm-12">
+                                            <div class="input-group">
+                                                <span *ngIf="typeRequest ==2"
+                                                    class="input-group-text left-text sp-width height-input-request">
+                                                    {{'PersonInChangeOfSubPhone' |
+                                                    localize}}</span>
+
+                                                <span *ngIf="typeRequest !=2"
+                                                    class="input-group-text left-text sp-width height-input-request">
+                                                    {{'PhoneNumber' |
+                                                    localize}}</span>
+                                                <input formControlName="personInChangeOfSubPhone" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row distance-row" *ngIf="typeRequest != 1">
+                                        <!-- <div class="col-xl-6 col-sm-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text left-text sp-width height-input-request">
+                                                    {{'DateTimeRequest' |
+                                                    localize}}<span class="sp-color">*</span></span>
+                                                <p-calendar formControlName="dateRequest" dateFormat="dd/mm/yy"
+                                                    inputId="dateformat" class="pcld-input">
+                                                </p-calendar>
+                                                <validation-messages [formCtrl]="requestAssetForm.get('dateRequest')">
+                                                </validation-messages>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-xl-6 col-sm-12" *ngIf="typeRequest != 4">
+                                            <div class="input-group">
+                                                <span class="input-group-text left-text sp-width height-input-request">
+                                                    {{'LiveMonitorName' |
+                                                    localize}}<span class="sp-color">*</span></span>
+                                                <input formControlName="liveMonitorName" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text">
+                                            </div>
+                                            <validation-messages [formCtrl]="requestAssetForm.get('liveMonitorName')">
+                                            </validation-messages>
+                                        </div>
+                                        <div class="col-xl-6 col-sm-12" *ngIf="typeRequest != 4">
+                                            <div class="input-group">
+                                                <span class="input-group-text left-text sp-width height-input-request">
+                                                    {{'LiveMonitorPhoneNumber' |
+                                                    localize}}</span>
+                                                <input formControlName="liveMonitorPhoneNumber" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-sm-12" *ngIf="typeRequest == 4">
+                                            <div class="input-group">
+                                                <span class="input-group-text left-text sp-width height-input-request">
+                                                    {{'DepartmentClient' |
+                                                    localize}}<span class="sp-color">*</span></span>
+                                                <input formControlName="departmentClient" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text">
+                                            </div>
+                                            <validation-messages [formCtrl]="requestAssetForm.get('departmentClient')">
+                                            </validation-messages>
+                                        </div>
+                                    </div>
+
+                                    <div class="row distance-row" *ngIf="typeRequest != 1&&typeRequest != 4">
+                                        <div class="col-xl-6 col-sm-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text left-text sp-width height-input-request">
+                                                    {{'LiveMonitorDepartment' |
+                                                    localize}}<span class="sp-color">*</span></span>
+                                                <input formControlName="liveMonitorDepartment" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text">
+                                            </div>
+                                            <validation-messages
+                                                [formCtrl]="requestAssetForm.get('liveMonitorDepartment')">
+                                            </validation-messages>
+                                        </div>
+                                    </div>
+
+                                    <div class="row distance-row" *ngIf="typeRequest != 1&&typeRequest != 4">
+                                        <div class="col-xl-12 col-sm-12">
+                                            <div class="input-group">
+                                                <span *ngIf="typeRequest == 3"
+                                                    class="input-group-text left-text sp-width-1 height-input-request">
+                                                    {{'WhereToBring' |
+                                                    localize}}<span class="sp-color">*</span></span>
+                                                <span *ngIf="typeRequest == 2"
+                                                    class="input-group-text left-text sp-width-1 height-input-request">
+                                                    {{'WhereToWork' |
+                                                    localize}}<span class="sp-color">*</span></span>
+                                                <input formControlName="whereToBring" autoFocus
+                                                    class="form-control m-input height-input-request"
+                                                    [placeholder]="l('')" type="text">
+                                            </div>
+                                            <validation-messages [formCtrl]="requestAssetForm.get('whereToBring')">
+                                            </validation-messages>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group col-xl-12 col-sm-12 div-description">
+                                        <span class="input-group-text left-textS sp-width-1"> {{'Description' |
+                                            localize}}</span>
+                                        <textarea inputId="Description" class="textarea-input form-control" rows="3"
+                                            formControlName="description" cols="30" pInputTextarea>
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="typeRequest != 2 && typeRequest != 4" class="card card-custom gutter-b">
+                            <div class="card-body">
+                                <app-list-asset #asset [formAssetRequest]="requestAssetForm" [internal]="isInternal"
+                                    [assetList]="listAssetDropDown" [assetRequest]="getRequestAsset">
+                                </app-list-asset>
+                            </div>
+                        </div>
+
+                        <div *ngIf="typeRequest == 2 || typeRequest == 4" class="card card-custom gutter-b">
+                            <div class="card-body">
+                                <app-list-workers #workers [formAssetRequest]="requestAssetForm"
+                                    (modalInputIdentity)="saveByIdentity($event)" [typeRequest]="typeRequest"
+                                    [assetRequest]="getRequestAsset"></app-list-workers>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- </form> -->
+                <div class="modal-footer modal-footer-master">
+                    <button [disabled]="saving" type="button" class="btn btn-light-primary" (click)="close()"><i
+                            class="fa fa-times"></i>{{"Cancel" | localize}}
+                    </button>
+
+                    <button type="button" class="btn btn-primary" [buttonBusy]="saving" (click)="save(2)"
+                        [disabled]="!mstSleDeliveryPlaceForm.form.valid || statusSaveIdentity"
+                        [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{"SendRequest" | localize}}</span>
+                    </button>
+
+                    <button *ngIf="isDraft!=1" pButton type="button" class="btn p-button-warning" [buttonBusy]="saving"
+                        (click)="save(1)" [disabled]="!mstSleDeliveryPlaceForm.form.valid || statusSaveIdentity">
+                        <i class="fa fa-save"></i>
+                        <span>{{"SaveDraft" | localize}}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<message-import-error #messageImportError [listErr]="message1"></message-import-error>

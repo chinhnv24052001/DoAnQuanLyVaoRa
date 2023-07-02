@@ -1,0 +1,61 @@
+.dv-mg-top{
+    margin-top: 100px;
+}
+
+.i-icon-format{
+    font-size: 90px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.dv-icon-warning{
+    text-align: center;
+}
+
+.body-agree
+{
+    text-align: center;
+    height: auto;
+    padding: 19px;
+    border-radius: 5px;
+    border: 13px solid #e7e7e7;
+}
+
+.div-box{
+    border-style: dashed;
+    height: 100%;
+    border-color: rgb(255, 174, 1);
+    text-align: center;
+}
+
+.dv-message{
+    padding: 11px 30px 0px 30px;
+    margin-top: 20px;
+}
+
+.btn-agree{
+    
+}
+
+.dv-btn-agree{
+    margin-top: 20px !important;
+    margin-bottom: 15px !important;
+}
+
+/* .dv-rim{
+    border: 5px solid red;
+} */
+
+.td-stt{
+    width: 30px;
+}
+
+.th-col-err{
+    text-align: left;
+}
+
+.td-err-mes{
+    text-align: left; 
+    padding-left: 10px;
+    color: rgb(163, 0, 0);
+}

@@ -1,0 +1,683 @@
+<!---->
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header modal-header-employees-learned">
+                <h4 class="modal-title" style="margin-left: 15px;">
+                    <span>{{l("DetailRequestAssetBring")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+
+            <div class="modal-body modal-boddy-employees-learned">
+                <div [class]="" [busyIf]="isLoading">
+                    <div class="card card-custom gutter-b">
+                        <div class="card-body">
+                            <h5> {{l('GenaralInfomation')}}</h5>
+                            <!--code TimeLine-->
+                            <app-timeline [status]="status" [success]="success" [value]="events"
+                                [temManageIntervent]="temManageIntervent"></app-timeline>
+                            <!---->
+                            <div class="form-genaral-info dv-padding-left">
+                                <div *ngIf="temManageIntervent">
+                                    <div *ngIf="this.events[0].status===2" class="input-group col-xl-12 col-sm-12">
+                                        <span class="sp-width"><span
+                                                class="sp-cl-reject">*</span>{{"TemManagerReasonForRefusal" |
+                                            localize}}</span>
+                                        <span>
+                                            <p class="sp-cl-reject">
+                                                {{requestAssetBringDetailDto.reasonForRefusal}}</p>
+                                        </span>
+                                    </div>
+                                    <div *ngIf="this.events[1].status===2" class="input-group col-xl-12 col-sm-12">
+                                        <span class="sp-width"><span
+                                                class="sp-cl-reject">*</span>{{"ManagerReasonForRefusal" |
+                                            localize}}</span>
+                                        <span>
+                                            <p class="sp-cl-reject">
+                                                {{requestAssetBringDetailDto.reasonForRefusal}}</p>
+                                        </span>
+                                    </div>
+                                    <div *ngIf="this.events[2].status===2" class="input-group col-xl-12 col-sm-12">
+                                        <span class="sp-width"><span
+                                                class="sp-cl-reject">*</span>{{"AdminReasonForRefusal"
+                                            |
+                                            localize}}</span>
+                                        <span>
+                                            <p class="sp-cl-reject">
+                                                {{requestAssetBringDetailDto.reasonForRefusal}}</p>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!temManageIntervent">
+                                    <div *ngIf="this.events[0].status===2" class="input-group col-xl-12 col-sm-12">
+                                        <span class="sp-width"><span
+                                                class="sp-cl-reject">*</span>{{"ManagerReasonForRefusal" |
+                                            localize}}</span>
+                                        <span>
+                                            <p class="sp-cl-reject">
+                                                {{requestAssetBringDetailDto.reasonForRefusal}}</p>
+                                        </span>
+                                    </div>
+                                    <div *ngIf="this.events[1].status===2" class="input-group col-xl-12 col-sm-12">
+                                        <span class="sp-width"><span
+                                                class="sp-cl-reject">*</span>{{"AdminReasonForRefusal" |
+                                            localize}}</span>
+                                        <span>
+                                            <p class="sp-cl-reject">
+                                                {{requestAssetBringDetailDto.reasonForRefusal}}</p>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row distance-row">
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text left-text sp-width height-input-request">
+                                                {{'UserName' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.userName" name="UserName"
+                                                autoFocus class="form-control m-input height-input-request"
+                                                [placeholder]="l('')" type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text left-text sp-width height-input-request">
+                                                {{'Department' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.department" name="Department"
+                                                autoFocus class="form-control m-input height-input-request"
+                                                [placeholder]="l('')" type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row distance-row">
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'ManageApproval' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.manageApprovalName"
+                                                name="ManageApproval" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'DateManageApproval' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.dateManageApproval"
+                                                name="DateManageApproval" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row distance-row" *ngIf="requestAssetBringDetailDto.manageApprovalMessage != '' ">
+                                    <div class="col-xl-12 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'ManagerApprovalInfo' |
+                                                localize}}</span>
+                                            <input style="color: rgb(255, 174, 0);" [(ngModel)]="requestAssetBringDetailDto.manageApprovalMessage"
+                                                name="ManagerApprovalInfo" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row distance-row">
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'AdminApproval' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.adminApprovalName"
+                                                name="AdminApproval" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'DateAdminApproval' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.dateAdminApproval"
+                                                name="DateAdminApproval" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row distance-row" *ngIf="requestAssetBringDetailDto.admApprovalMessage != '' ">
+                                    <div class="col-xl-12 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'ADMApprovalInfo' |
+                                                localize}}</span>
+                                            <input style="color: rgb(255, 174, 0);" [(ngModel)]="requestAssetBringDetailDto.admApprovalMessage"
+                                                name="ADMApprovalInfo" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="card card-custom gutter-b">
+                        <div class="card-body">
+                            <h5> {{l('RequestInfomation')}}</h5>
+                            <div class="form-genaral-info dv-padding-left">
+
+                                <div class="row distance-row">
+                                    <div class="col-xl-12 col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text left-text sp-width height-input-request">
+                                                {{'TitleRequest' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.title" name="TitleRequest"
+                                                autoFocus class="form-control m-input height-input-request"
+                                                [placeholder]="l('')" type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row distance-row"
+                                    *ngIf="requestAssetBringDetailDto.typeRequest != 1 && requestAssetBringDetailDto.typeRequest != 4">
+                                    <div class="col-xl-12 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'VenderName' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.venderName" name="VenderName"
+                                                autoFocus class="form-control m-input height-input-request"
+                                                [placeholder]="l('')" type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row distance-row">
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text left-text sp-width height-input-request">
+                                                {{'DateRequest' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.dateRequest"
+                                                name="TitleRequest" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'RequestCode' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.requestCode"
+                                                name="RequestCode" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row distance-row">
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'TypeRequest' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="typeRequestName" value="typeRequestName"
+                                                name="TypeRequest" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-6 col-sm-12" *ngIf="requestAssetBringDetailDto.typeRequest == 4">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'DepartmentClient' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.departmentClient"
+                                                name="DepartmentClient" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-6 col-sm-12"
+                                        *ngIf="requestAssetBringDetailDto.typeRequest != 1 && requestAssetBringDetailDto.typeRequest != 4">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'LiveMonitorName' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.liveMonitorName"
+                                                name="LiveMonitorName" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row distance-row" *ngIf="requestAssetBringDetailDto.typeRequest == 4">
+                                    <div class="col-xl-12 col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text left-text sp-width height-input-request">
+                                                {{'TradeUnionOrganization' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.tradeUnionOrganization"
+                                                name="TradeUnionOrganization" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row distance-row"
+                                    *ngIf="requestAssetBringDetailDto.typeRequest != 1 && requestAssetBringDetailDto.typeRequest != 4">
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'LiveMonitorPhoneNumber' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.liveMonitorPhoneNumber"
+                                                name="LiveMonitorPhoneNumber" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span class="input-group-text left-text height-input-request sp-width">
+                                                {{'LiveMonitorDepartment' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.liveMonitorDepartment"
+                                                name="LiveMonitorDepartment" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row distance-row">
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span
+                                                *ngIf="requestAssetBringDetailDto.typeRequest ==1 || requestAssetBringDetailDto.typeRequest ==3"
+                                                class="input-group-text left-text height-input-request sp-width">
+                                                {{'PersonSignAsset' |
+                                                localize}}</span>
+
+                                            <span *ngIf="requestAssetBringDetailDto.typeRequest ==2"
+                                                class="input-group-text left-text height-input-request sp-width">
+                                                {{'PersonInChargeOfSubName' |
+                                                localize}}</span>
+
+                                            <span *ngIf="requestAssetBringDetailDto.typeRequest ==4"
+                                                class="input-group-text left-text height-input-request sp-width">
+                                                {{'RegisterRepresentative' |
+                                                localize}}</span>
+
+                                            <input [(ngModel)]="requestAssetBringDetailDto.personInChargeOfSubName"
+                                                name="personInChargeOfSubName"
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-6 col-sm-12">
+                                        <div class="input-group date-p-calendar">
+                                            <span *ngIf="requestAssetBringDetailDto.typeRequest ==2"
+                                                class="input-group-text left-text height-input-request sp-width">
+                                                {{'PersonInChangeOfSubPhone' |
+                                                localize}}</span>
+
+                                            <span *ngIf="requestAssetBringDetailDto.typeRequest !=2"
+                                                class="input-group-text left-text height-input-request sp-width">
+                                                {{'PhoneNumber' |
+                                                localize}}</span>
+
+                                            <input [(ngModel)]="requestAssetBringDetailDto.personInChangeOfSubPhone"
+                                                name="personInChangeOfSubPhone" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row distance-row"
+                                    *ngIf="requestAssetBringDetailDto.typeRequest != 1 && requestAssetBringDetailDto.typeRequest != 4">
+                                    <div class="col-xl-12 col-sm-12"
+                                        *ngIf="requestAssetBringDetailDto.typeRequest != 1">
+                                        <div class="input-group date-p-calendar">
+                                            <span *ngIf="requestAssetBringDetailDto.typeRequest == 3"
+                                                class="input-group-text left-text height-input-request sp-width">
+                                                {{'WhereToBring' |
+                                                localize}}</span>
+                                            <span *ngIf="requestAssetBringDetailDto.typeRequest == 2"
+                                                class="input-group-text left-text height-input-request sp-width">
+                                                {{'WhereToWork' |
+                                                localize}}</span>
+                                            <input [(ngModel)]="requestAssetBringDetailDto.whereToBring"
+                                                name="WhereToBring" autoFocus
+                                                class="form-control m-input height-input-request" [placeholder]="l('')"
+                                                type="text" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-group col-xl-12 col-sm-12 div-description">
+                                    <span class="input-group-text left-text sp-width"> {{'Description' |
+                                        localize}}</span>
+                                    <textarea inputId="Description" class="textarea-input form-control" rows="3"
+                                        cols="30" [(ngModel)]="requestAssetBringDetailDto.description" pInputTextarea
+                                        disabled="true">
+                                        </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-custom gutter-b"
+                        *ngIf="requestAssetBringDetailDto.typeRequest != 2 && requestAssetBringDetailDto.typeRequest != 4">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-12 primeng-datatable-container div-form-table"
+                                    [busyIf]="primengTableHelper.isLoading">
+                                    <h5> {{l('ListAsset')}}</h5>
+                                    <!---->
+                                    <p-table #dataTableAsset dataKey="id" editMode="row"
+                                        [value]="requestAssetBringDetailDto.listAssetDto" [rowHover]="true"
+                                        [lazy]="true" [paginator]="false" styleClass="p-datatable-gridlines">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>
+                                                    {{'STT' | localize}}
+                                                </th>
+                                                <th pSortableColumn="assetName">
+                                                    {{'AssetName' | localize}}
+                                                </th>
+                                                <!-- <th pSortableColumn="seriNumber">
+                                                    {{'SeriNumber' | localize}}
+                                                </th> -->
+                                                <th pSortableColumn="tagCode">
+                                                    {{'TagCode' | localize}}
+                                                </th>
+                                                <th pSortableColumn="total">
+                                                    {{'Total' | localize}}
+                                                </th>
+                                                <th pSortableColumn="startDate">
+                                                    {{'StartDate' | localize}}
+                                                </th>
+                                                <th pSortableColumn="endDate">
+                                                    {{'EndDate' | localize}}
+                                                </th>
+                                                <th>
+
+                                                </th>
+                                                <th pSortableColumn="" class="last-col">
+                                                    #
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-record="$implicit" let-rowIndex="rowIndex">
+                                            <tr>
+                                                <td style="width: 10px; text-align: center;">
+                                                    <span class="p-column-title"> {{'STT' | localize}}</span>
+                                                    {{rowIndex+1}}
+                                                </td>
+                                                <td>
+                                                    <span class="p-column-title"> {{'AssetName' | localize}}</span>
+                                                    {{record.assetName}}
+                                                </td>
+                                                <!-- <td  class="td-serinumber">
+                                                    <span class="p-column-title"> {{'SeriNumber' | localize}}</span>
+                                                    {{record.seriNumber}}
+                                                </td> -->
+                                                <td class="td-tag-code">
+                                                    <span class="p-column-title"> {{'TagCode' | localize}}</span>
+                                                    {{record.tagCode}}
+                                                </td>
+                                                <td class="td-total">
+                                                    <span class="p-column-title"> {{'Total' | localize}}</span>
+                                                    {{record.total}}
+                                                </td>
+                                                <td class="td-date-format">
+                                                    <span class="p-column-title"> {{'StartDate' | localize}}</span>
+                                                    <!-- {{record.dateStart | luxonFormat:'dd/LL/yyyy HH:mm'}} -->
+                                                    {{record.dateStart | luxonFormat:'dd/LL/yyyy'}}
+                                                </td>
+                                                <td class="td-date-format"  *ngIf="!record.aviationIsBack">
+                                                    <span class="p-column-title"> {{'EndDate' | localize}}</span>
+                                                    {{record.dateEnd | luxonFormat:'dd/LL/yyyy'}}
+                                                </td>
+                                                <td class="td-date-format" *ngIf="record.aviationIsBack">
+                                                    <span class="p-column-title"> {{'EndDate' | localize}}</span>
+                                                    {{record.aviationIsBackString}}
+                                                </td>
+                                                <td class="td-image">
+                                                    <img (click)="viewImageByte(record.assetImage)"
+                                                        [src]="'data:image/jpg;base64,' + record.assetImage" width='60'
+                                                        height='60'>
+                                                </td>
+                                                <td class="td-last-col-asset">
+                                                    <button pButton type="button" class="btn p-button-warning print-btn"
+                                                        (click)="createAssetBarCode(1, record.id)">
+                                                        <i class="fa fa-print"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-custom gutter-b"
+                        *ngIf="requestAssetBringDetailDto.typeRequest == 2 || requestAssetBringDetailDto.typeRequest == 4">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-12 primeng-datatable-container div-form-table">
+                                    <h5 *ngIf="requestAssetBringDetailDto.typeRequest == 2"> {{l('ListEmployees')}}</h5>
+                                    <h5 *ngIf="requestAssetBringDetailDto.typeRequest == 4"> {{l('ListClient')}}</h5>
+                                    <p-table #dataTableEmployess dataKey="id"
+                                        [value]="requestAssetBringDetailDto.listEmployeesDto" [paginator]="false"
+                                        styleClass="p-datatable-gridlines" [rowHover]="true" [lazy]="true">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>
+                                                    {{'STT' | localize}}
+                                                </th>
+                                                <th pSortableColumn="employeesModalName"
+                                                    *ngIf="requestAssetBringDetailDto.typeRequest == 2">
+                                                    {{'EmployeesModalName' | localize}}
+                                                </th>
+                                                <th pSortableColumn="employeesModalName"
+                                                    *ngIf="requestAssetBringDetailDto.typeRequest == 4">
+                                                    {{'ClientName' | localize}}
+                                                </th>
+                                                <th pSortableColumn="identityCard">
+                                                    {{'IdentityCard' | localize}}
+                                                </th>
+                                                <th pSortableColumn="startDate">
+                                                    {{'StartDate' | localize}}
+                                                </th>
+                                                <th pSortableColumn="endDate">
+                                                    {{'EndDate' | localize}}
+                                                </th>
+                                                <th>
+
+                                                </th>
+                                                <th pSortableColumn="" class="last-col">
+                                                    #
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-record="$implicit" let-rowIndex="rowIndex">
+                                            <!-- <tr [ngClass]="!record.checkWorkerLearned ? 'tr-bg-check-worker':''"> -->
+                                            <tr>
+                                                <td style="width: 7px; text-align: center;">
+                                                    <span class="p-column-title"> {{'STT' | localize}}</span>
+                                                    {{rowIndex+1}}
+                                                </td>
+                                                <td>
+                                                    <span class="p-column-title"> {{'EmployeesModalName' |
+                                                        localize}}</span>
+                                                    {{record.employeesName}}
+                                                </td>
+                                                <td>
+                                                    <span class="p-column-title"> {{'IdentityCard' | localize}}</span>
+                                                    {{record.identityCard}}
+                                                </td>
+                                                <td class="td-date-format">
+                                                    <span class="p-column-title"> {{'StartDate' | localize}}</span>
+                                                    {{record.dateStart | luxonFormat:'dd/LL/yyyy'}}
+                                                </td>
+                                                <td class="td-date-format">
+                                                    <span class="p-column-title"> {{'EndDate' | localize}}</span>
+                                                    {{record.dateEnd | luxonFormat:'dd/LL/yyyy'}}
+                                                </td>
+                                                
+                                                <td class="td-image">
+                                                    <img (click)="viewImageByte(record.employeesImage)"
+                                                        [src]="'data:image/jpg;base64,' + record.employeesImage"
+                                                        width='60' height='60'>
+                                                </td>
+                                                <td class="td-last-col-asset"
+                                                    *ngIf="requestAssetBringDetailDto.typeRequest == 2">
+                                                    <button pButton type="button" class="btn p-button-warning print-btn"
+                                                        (click)="createAssetBarCode(2, record.id)">
+                                                        <i class="fa fa-print"></i>
+                                                    </button>
+                                                </td>
+                                                <td class="td-last-col-asset"
+                                                    *ngIf="requestAssetBringDetailDto.typeRequest == 4">
+                                                    <button pButton type="button" class="btn p-button-warning print-btn"
+                                                        (click)="createAssetBarCode(4, record.id)">
+                                                        <i class="fa fa-print"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- </form> -->
+            <div class="modal-footer modal-footer-master">
+
+                <!-- <button *ngIf="isCreateUser" pButton pRipple type="button" class="p-button-outlined p-button-secondary"
+                    (click)="viewSendMail(requestId)">
+                    <i class="fa fa-envelope"></i> <span>{{"SendEmail" | localize}}</span>
+                </button> -->
+                <!-- <button *ngIf="isAdminapprove" pButton pRipple type="button"
+                    class="bt-height btn p-button-raised p-button-sm p-button-help"
+                    (click)="viewHistoryDetail(requestId)">
+                    <i class="fa fa-eye"></i> <span>{{"DetailHistory" | localize}}</span>
+                </button> -->
+
+
+                <!-- <button *ngIf="requestAssetBringDetailDto.status===21&&isTemManagerApproved" type="button" class="btn btn-primary"
+                    [buttonBusy]="saving" [disabled]="requestAssetForm && !requestAssetForm.valid"
+                    (click)="temMamagerApprove()" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                    <span>{{"TemManagerApprove" | localize}}</span>
+                </button>
+                <button *ngIf="requestAssetBringDetailDto.status===21&&isTemManagerApproved" type="button" (click)="temManagerReject()"
+                    class="btn btn-danger" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i
+                        class="fa fa-save"></i>
+                    <span>{{"TemManagerReject" | localize}}</span>
+                </button> -->
+
+                <button *ngIf="requestAssetBringDetailDto.status===1&&isManagerApproved" type="button"
+                    class="btn btn-primary" [buttonBusy]="saving"
+                    [disabled]="requestAssetForm && !requestAssetForm.valid" (click)="mamagerApprove()"
+                    [busyText]="l('SavingWithThreeDot')"><i class="fa fa-check"></i>
+                    <span>{{"ManagerApprove" | localize}}</span>
+                </button>
+
+                <button *ngIf="requestAssetBringDetailDto.status===1&&isManagerApproved" type="button"
+                    class="btn btn-warning" [buttonBusy]="saving"
+                    [disabled]="requestAssetForm && !requestAssetForm.valid" (click)="managerRequestInfo()"
+                    [busyText]="l('SavingWithThreeDot')"><i class="fa fa-question"></i>
+                    <span>{{"RequestInfo" | localize}}</span>
+                </button>
+
+                <button *ngIf="requestAssetBringDetailDto.status===1&&isManagerApproved" type="button"
+                    (click)="managerReject()" class="btn btn-danger" [buttonBusy]="saving"
+                    [busyText]="l('SavingWithThreeDot')"><i class="fa fa-times"></i>
+                    <span>{{"ManagerReject" | localize}}</span>
+                </button>
+
+                <button *ngIf="requestAssetBringDetailDto.status===2&&isADMApproved" type="button"
+                    class="btn btn-primary" [buttonBusy]="saving"
+                    [disabled]="requestAssetForm && !requestAssetForm.valid" (click)="admApprove()"
+                    [busyText]="l('SavingWithThreeDot')"><i class="fa fa-check"></i>
+                    <span>{{"AdmAccept" | localize}}</span>
+                </button>
+
+                <button *ngIf="requestAssetBringDetailDto.status===2&&isADMApproved" type="button"
+                    class="btn btn-warning" [buttonBusy]="saving"
+                    [disabled]="requestAssetForm && !requestAssetForm.valid" (click)="admRequestInfo()"
+                    [busyText]="l('SavingWithThreeDot')"><i class="fa fa-question"></i>
+                    <span>{{"RequestInfo" | localize}}</span>
+                </button>
+
+                <button *ngIf="requestAssetBringDetailDto.status===2&&isADMApproved" type="button" (click)="admReject()"
+                    class="btn btn-danger" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i
+                        class="fa fa-times"></i>
+                    <span>{{"AdmReject" | localize}}</span>
+                </button>
+
+                <button [disabled]="saving" type="button" class="btn btn-light-primary" (click)="close()"><i
+                        class="fa fa-times"></i>{{"CancelModal" | localize}}
+                </button>
+
+                <!-- <button *ngIf="isCreateUser&&(events[0].status===3 || events[1].status===3 || events[1].status===0)" type="button" (click)="cancelRequest()"
+                    class="btn btn-danger">
+                    <i class="fa fa-ban"></i>
+                    <span>{{"CancelRequest" | localize}}</span>
+                </button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-reason-of-refusal-modal #reasonOfRefusal (modalLoadDetail)="viewDetail($event)" [isLoading]="isLoading">
+</app-reason-of-refusal-modal>
+
+<CreateAssetBarCode #CreateAssetBarCode></CreateAssetBarCode>
+
+<DetailHistoryAssetInOut #DetailHistoryAssetInOut [requestId]="requestId" [typeRequest]="typeRequest"
+    (modalReloadLoadDetail)="viewDetail($event)">
+</DetailHistoryAssetInOut>
+
+<DetailHistoryEmployeesInOut #DetailHistoryEmployeesInOut [requestId]="requestId" [typeRequest]="typeRequest"
+    (modalReloadLoadDetail)="viewDetail($event)">
+</DetailHistoryEmployeesInOut>
+
+
+<confirm-cancel-request #ConfirmCancelRequest [requestId]="requestId" (modalEdit)="cancelRequestEdit($event)"
+    (modalDelete)="cancelRequestDelete($event)" (modalSaveDraft)="cancelRequestSaveDraft($event)">
+</confirm-cancel-request>
+
+<message-agree #messageAgreeComponent [message1]="message1"></message-agree>
+<send-mail-to-manufacture #SendMailToManufacture [isLoading]="isLoading"></send-mail-to-manufacture>
+<view-image #viewImage></view-image>

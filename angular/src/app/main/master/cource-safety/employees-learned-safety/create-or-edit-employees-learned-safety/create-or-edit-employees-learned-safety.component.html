@@ -1,0 +1,105 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form [formGroup]="editEmployeesLearnedForm" *ngIf="active" #mstSleDeliveryPlaceForm="ngForm" novalidate
+                (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header modal-header-master" style="margin-bottom: 20px;">
+                    <h5 class="modal-title" style="margin-left: 15px;">
+                        <span *ngIf="isEdit">{{l("Edit")}}</span>
+                        <span *ngIf="!isEdit">{{l("Add")}}</span>
+                    </h5>
+                    <button type="button" style="margin-right: 1% !important;" class="close" (click)="close()"
+                        [attr.aria-label]="l('Close')">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body modal-body-master">
+                    <div
+                        class="form-group form-group-master form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label>{{"EmployeesName" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input id="EmployeesName" formControlName="EmployeesName" class="form-control" type="text"
+                            name="EmployeesName" [ngClass]="{'edited': employeesLearned.employeesName}"
+                            [(ngModel)]="employeesLearned.employeesName">
+                        <validation-messages [formCtrl]="editEmployeesLearnedForm.get('EmployeesName')">
+                        </validation-messages>
+                    </div>
+                    <div class="form-group form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label>{{"IdentityCard" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input formControlName="IdentityCard" id="IdentityCard" class="form-control" type="text"
+                            name="IdentityCard" [ngClass]="{'edited': employeesLearned.identityCard}"
+                            [(ngModel)]="employeesLearned.identityCard">
+                        <validation-messages [formCtrl]="editEmployeesLearnedForm.get('IdentityCard')">
+                        </validation-messages>
+                    </div>
+                    <div class="form-group form-md-line-input form-md-floating-label no-hint input-bottom-form"
+                        style="margin-bottom: 20px;">
+                        <label>{{"Gender" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <select autoFocus size="1" id="Gender" formControlName="Gender" class="form-control"
+                            [(ngModel)]="employeesLearned.gender" name="Gender">
+                            <option *ngFor="let gender of genderSelect" [value]="gender.value">
+                                {{gender.text}}
+                            </option>
+                        </select>
+                        <validation-messages [formCtrl]="editEmployeesLearnedForm.get('Gender')"></validation-messages>
+                    </div>
+                    <div class="form-group form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label>{{"PhoneNumber" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input formControlName="PhoneNumber" id="PhoneNumber" class="form-control" type="text"
+                            name="PhoneNumber" [ngClass]="{'edited': employeesLearned.phoneNumber}"
+                            [(ngModel)]="employeesLearned.phoneNumber">
+                        <validation-messages [formCtrl]="editEmployeesLearnedForm.get('PhoneNumber')">
+                        </validation-messages>
+                    </div>
+
+                    <div class="form-group form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label>{{"Address" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input formControlName="Address" id="Address" class="form-control" type="text" name="Address"
+                            [ngClass]="{'edited': employeesLearned.address}" [(ngModel)]="employeesLearned.address">
+                        <validation-messages [formCtrl]="editEmployeesLearnedForm.get('Address')"></validation-messages>
+                    </div>
+
+                    <div class="form-group form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label>{{"Vender" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                     <!-- <select autoFocus formControlName="venderId" id="venderId" [(ngModel)]="employeesLearned.venderId"
+                            class="form-control">
+                            <option *ngFor="let vender of listVenderDropDown"
+                                [value]="vender.value">
+                                {{vender.label}}</option>
+                        </select> -->
+                        <p-dropdown formControlName="venderId" class="p-propdown-input-edit" name="venderId" [options]="listVenderDropDown" [(ngModel)]="employeesLearned.venderId"
+                                            optionLabel="label" optionValue="value" [filter]="true" filterBy="label" 
+                                            placeholder="{{selectVender}}">
+                                        </p-dropdown>
+                        <validation-messages [formCtrl]="editEmployeesLearnedForm.get('venderId')"></validation-messages>
+                    </div>
+
+                    <div class="form-group form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label>{{"PersonInCharge" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input formControlName="PersonInCharge" id="PersonInCharge" class="form-control" type="text" name="PersonInCharge"
+                            [ngClass]="{'edited': employeesLearned.personInCharge}" [(ngModel)]="employeesLearned.personInCharge">
+                        <validation-messages [formCtrl]="editEmployeesLearnedForm.get('PersonInCharge')"></validation-messages>
+                    </div>
+
+                    <!-- <div class="form-group form-md-line-input form-md-floating-label no-hint">
+                        <label>{{"CourceName" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input formControlName="CourceName" id="CourceName" class="form-control" type="text"
+                            name="CourceName" [(ngModel)]="record.courceName" [ngClass]="{'edited': record.courceName}"
+                            disabled>
+                    </div> -->
+                </div>
+
+                <div class="modal-footer modal-footer-master">
+                    <button [disabled]="saving" type="button" class="btn btn-light-primary" (click)="close()"><i
+                            class="fa fa-times"></i>{{"Cancel" | localize}}
+                    </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!mstSleDeliveryPlaceForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{"Save" | localize}}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

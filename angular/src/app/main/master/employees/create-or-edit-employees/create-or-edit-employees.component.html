@@ -1,0 +1,62 @@
+<!--start-->
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form [formGroup]="employeesForm" *ngIf="active" #mstSleDeliveryPlaceForm="ngForm" novalidate
+                (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header modal-header-master" style="margin-bottom: 20px;">
+                    <h5 class="modal-title" style="margin-left: 15px;">
+                        <span *ngIf="isEdit">{{l("Edit")}}</span>
+                        <span *ngIf="!isEdit">{{l("Add")}}</span>
+                    </h5>
+                    <button type="button" style="margin-right: 1% !important;" class="close" (click)="close()"
+                        [attr.aria-label]="l('Close')">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body modal-body-master">
+                    <div class="form-group form-group-master input-bottom-form" >
+                        <label>{{"VenderName" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <select id="selectVender" formControlName="VenderId" autoFocus size="1" class="form-control"
+                            [(ngModel)]="employees.venderId" name="selectVender">
+                            <option *ngFor="let vender of listVenderDropDown" [value]="vender.value">{{vender.label}}
+                            </option>
+                        </select>
+                        <validation-messages [formCtrl]="employeesForm.get('VenderId')"></validation-messages>
+                    </div>
+                    <div class="form-group form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label>{{"EmployeesName" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input id="EmployeesName" formControlName="EmployeesName" class="form-control" type="text"
+                            name="employeesname" [ngClass]="{'edited': employees.employeesName}"
+                            [(ngModel)]="employees.employeesName" required maxlength="128">
+                        <validation-messages [formCtrl]="employeesForm.get('EmployeesName')"></validation-messages>
+                    </div>
+                    <div class="form-group form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label>{{"Address" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input id="Address" formControlName="Address" class="form-control" type="text" name="addesss"
+                            [ngClass]="{'edited': employees.address}" [(ngModel)]="employees.address" required
+                            maxlength="128">
+                        <validation-messages [formCtrl]="employeesForm.get('Address')"></validation-messages>
+                    </div>
+                    <div class="form-group form-md-line-input form-md-floating-label no-hint">
+                        <label>{{"PhoneNumber" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input id="PhoneNumber" formControlName="PhoneNumber" class="form-control" type="text"
+                            name="phonenumber" [ngClass]="{'edited': employees.phoneNumber}"
+                            [(ngModel)]="employees.phoneNumber" required maxlength="128">
+                        <validation-messages [formCtrl]="employeesForm.get('PhoneNumber')"></validation-messages>
+                    </div>
+                </div>
+
+                <div class="modal-footer modal-footer-master">
+                    <button [disabled]="saving" type="button" class="btn  btn-default" (click)="close()"><i
+                            class="fa fa-times"></i>{{"Cancel" | localize}}</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!mstSleDeliveryPlaceForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{"Save" | localize}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

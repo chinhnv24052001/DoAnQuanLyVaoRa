@@ -1,0 +1,38 @@
+<!---->
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form [formGroup]="sendMailGroupForm" *ngIf="active" #mstSleDeliveryPlaceForm="ngForm" novalidate
+                (ngSubmit)="sendMail()" autocomplete="off">
+                <div class="modal-header modal-header-master" style="margin-bottom: 20px;">
+                    <h5 class="modal-title" style="margin-left: 15px;">
+                        <span>{{l("SendEmailToManufacture")}}</span>
+                    </h5>
+                    <button type="button" style="margin-right: 1% !important;" class="close" (click)="close()"
+                        [attr.aria-label]="l('Close')">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body modal-body-master">
+                    <div class="form-group form-group-master form-md-line-input form-md-floating-label no-hint">
+                        <label for="Email">{{"SupplierEmail" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input id="Email" formControlName="Email" class="form-control" type="text"
+                            name="Email" 
+                            [(ngModel)]="email">
+                        <validation-messages [formCtrl]="sendMailGroupForm.get('Email')"></validation-messages>
+                    </div>
+                </div>
+
+                <div class="modal-footer modal-footer-master">
+                    <button [disabled]="saving" type="button" class="btn btn-light-primary" (click)="close()"><i
+                            class="fa fa-times"></i>{{"Cancel" | localize}}</button>
+                    <button style="color: #e8d9e9;" type="submit" class="btn btn-primary" [disabled]="!mstSleDeliveryPlaceForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{"Send" | localize}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

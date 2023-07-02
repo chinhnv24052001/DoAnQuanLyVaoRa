@@ -1,0 +1,63 @@
+<!-- <div class="card card-custom h-100">
+    <div class="card-header align-items-center border-0">
+        <h3 class="card-title align-items-start flex-column">
+            <span class="font-weight-bolder text-dark">
+                 General Stats
+            </span>
+        </h3>
+        <div class="card-toolbar">
+            <a href="javascript:;" class="btn btn-primary" (click)="generalStatsPieChart.reload()">
+                <i class="fa fa-redo"></i> Refresh
+            </a>
+        </div>
+    </div>
+    <div class="card-body" [perfectScrollbar]>
+        <div class="row" style="max-height: 200px">
+            <ngx-charts-pie-grid [results]="generalStatsPieChart.data">
+            </ngx-charts-pie-grid>
+        </div>
+    </div>
+</div> -->
+<div class="row row-no-padding row-col-separator-xl h-100" [perfectScrollbar]>
+    <div class="col pr-0 dv-btn-dasboard">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics h-100">
+             <button type="button" class="btn btn-dasboard-style" (click)="fnToAssetGroupView()">
+                <i class="flaticon-list-2"></i><br><span>{{"ListAssetGroup" | localize}} </span>    
+             </button>
+        </div>
+    </div>
+
+    <div class="col pr-0 dv-btn-dasboard">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics h-100">
+             <button type="button" class="btn btn-dasboard-style" (click)="fnToAssetView()">
+                <i  class="flaticon-list-1"></i><br><span>{{"ListAsset" | localize}} </span>    
+             </button>
+        </div>
+    </div>
+
+    <div class="col pr-0 dv-btn-dasboard">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics h-100">
+             <button type="button" class="btn btn-dasboard-style" (click)="fnToAssetMnInView()">
+                <i class="flaticon-book"></i><br><span>{{"AssetInManament" | localize}} </span>    
+             </button>
+        </div>
+    </div>
+
+    <div class="col pr-0 dv-btn-dasboard">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics h-100">
+             <button type="button" class="btn btn-dasboard-style" (click)="fnToAssetMnOutView()">
+                <i class="flaticon-book"></i><br><span>{{"AssetOutManament" | localize}} </span>    
+             </button>
+        </div>
+    </div>
+
+    <div class="col dv-btn-dasboard">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics h-100">
+             <button type="button" class="btn btn-dasboard-style" (click)="fnToReportView()">
+                <i class="flaticon-squares i-report-style"></i><br><span>{{"Report" | localize}} </span>    
+             </button>
+        </div>
+    </div>
+    
+</div>
+

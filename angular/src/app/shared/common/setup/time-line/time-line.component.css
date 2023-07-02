@@ -1,0 +1,134 @@
+.time-line {
+    display: flex;
+    padding: 5px 0px 0px 16%; 
+    width: 100%;
+}
+
+.time-line2 {
+    display: flex;
+    padding: 0px 0px 40px 15%; 
+    width: 100%;
+}
+
+
+.timeline-event0 {
+    
+    display: flex;
+    position: relative;
+    min-width: 100px;
+    width: 19%;
+}
+
+.temtimeline-event0 {
+    
+    display: flex;
+    position: relative;
+    min-width: 100px;
+    width: 16%;
+}
+
+.timeline-event1 {
+    display: flex;
+    position: relative;
+    min-width: 100px;
+    width: 35%;
+}
+
+.temtimeline-event1 {
+    display: flex;
+    position: relative;
+    min-width: 100px;
+    width: 25%;
+}
+
+
+.timeline-event {
+    display: flex;
+    position: relative;
+    min-width: 100px;
+    width: 35%;
+}
+
+.timeline-event:last-child {
+    min-height: 0;
+}
+
+.timeline-content {
+    width: 100%;
+    position: absolute;
+    padding-top: 15px;
+    align-items: center;
+}
+
+.timeline-point-track-container {
+   align-items: center;
+}
+
+.dv-top-horizontal {
+    margin-top: 15px;
+    width: 100%;
+}
+
+.timeline-point {
+    display: flex;
+    align-self: baseline;
+    border: 2px solid #1E90FF;
+    box-shadow: 0 5px 7px #8dcee4;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #fff;
+}
+
+.timeline-point-wait{
+    border: 2px solid #efcf01;
+    box-shadow: 0 5px 7px #e4d88d;
+}
+
+
+.timeline-track {
+   height: 3px;
+    background-color: #dee2e6 ;
+    width: 100%;
+    
+}
+
+
+.heighlight{
+    background-color: #19ca16;
+    box-shadow: 0 8px 10px #8de490;
+    border: 2px solid #19ca16;
+}
+
+.heighlight-wait{
+    background-color: #efcf01	;
+    box-shadow: 0 8px 10px #e4d88d;
+}
+
+.heighlight-false{
+    background-color: #f3381b;
+    box-shadow: 0 8px 10px #e48d8d;
+    border: 2px solid #f3381b !important;
+}
+
+.sp-padding-left{
+    margin-left: 15px !important;
+}
+
+.time-line1 {
+    padding-left: 1.25em;
+    display: flex;
+    padding: 0px 0px 30px 15%; 
+    width: 100%;
+}
+
+.sp-format-text{
+    font-size: 11px;
+    color: black;
+    
+}
+
+.time-line-padding-right{
+    padding-right: 16%;
+}
+

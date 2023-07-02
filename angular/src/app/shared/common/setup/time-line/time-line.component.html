@@ -1,0 +1,73 @@
+<div class="time-line1">
+    <div class="timeline-event0" [ngClass]="temManageIntervent ? 'temtimeline-event0' : ''" >
+        <div class="timeline-content">
+            <p>
+
+            </p>
+        </div>
+    </div>
+    <div class="timeline-event1" [ngClass]="temManageIntervent ? 'temtimeline-event1' : ''" >
+        <div class="timeline-content">
+            <p class="sp-format-text text-center" style="color: black;">
+                {{value[0].approverName}}
+            </p>
+        </div>
+    </div>
+    <div class="timeline-event1" [ngClass]="temManageIntervent ? 'temtimeline-event1' : ''" >
+        <div class="timeline-content">
+            <p class="sp-format-text text-center" style="color: black;">
+                {{value[1].approverName}}
+            </p>
+        </div>
+    </div>
+    <div class="timeline-event1" *ngIf="temManageIntervent" [ngClass]="temManageIntervent ? 'temtimeline-event1' : ''" >
+        <div class="timeline-content">
+            <p class="sp-format-text text-center">
+                {{value[2].approverName}}
+            </p>
+        </div>
+    </div>
+</div>
+<div class="time-line" [ngClass]="temManageIntervent? 'time-line-padding-right' : ''">
+    <div class="timeline-point-track-container">
+        <div class="timeline-point heighlight"></div>
+    </div>
+    <div *ngFor="let item of value" class="timeline-event">
+        <div class="timeline-point-track-container dv-top-horizontal">
+            <div class="timeline-track" [ngClass]="item?.statustrack===2 ? 'heighlight' : item?.statustrack===1 ? 'heighlight-wait': item?.statustrack===3 ? 'heighlight-false' : '' "></div>
+        </div>
+        <div class="timeline-point-track-container">
+            <div  class="timeline-point" [ngClass]="item?.status===1 ? 'heighlight' : item?.status===2 ?  'heighlight-false' : item?.status===3 ?  'timeline-point-wait': '' "></div>
+        </div>
+    </div>
+</div>
+<div class="time-line2" [ngClass]="temManageIntervent? 'time-line2-padding-right' : ''">
+    <div class="timeline-event0" [ngClass]="temManageIntervent ? 'temtimeline-event0' : ''" >
+        <div class="timeline-content">
+            <p style="color: black;">
+                {{'Request' | localize}}
+            </p>
+        </div>
+    </div>
+    <div class="timeline-event1" [ngClass]="temManageIntervent ? 'temtimeline-event1' : ''" >
+        <div class="timeline-content">
+            <p class="sp-padding-left text-center" style="color: black;">
+                {{value[0].content}}
+            </p>
+        </div>
+    </div>
+    <div class="timeline-event1" [ngClass]="temManageIntervent ? 'temtimeline-event1' : ''">
+        <div class="timeline-content">
+            <p class="sp-padding-left text-center" style="color: black;">
+                {{value[1].content}}
+            </p>
+        </div>
+    </div>
+    <div class="timeline-event1" *ngIf="temManageIntervent" [ngClass]="temManageIntervent ? 'temtimeline-event1' : ''">
+        <div class="timeline-content">
+            <p class="sp-padding-left text-center" style="color: black;">
+                {{value[2].content}}
+            </p>
+        </div>
+    </div>
+</div>

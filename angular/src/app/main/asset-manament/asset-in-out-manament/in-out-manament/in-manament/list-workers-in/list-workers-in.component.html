@@ -1,0 +1,103 @@
+<div class="row align-items-center dv-form" id="">
+    <div class="col-12 primeng-datatable-container div-form-table" [busyIf]="primengTableHelper.isLoading">
+        <h5 *ngIf="typeRequest!=4"> {{l('ListEmployeesModal')}}</h5>
+        <h5 *ngIf="typeRequest==4"> {{l('ListClient')}}</h5>
+        <p-table #dataTableEmployess dataKey="id" [value]="primengTableHelper.records" [paginator]="false"
+            (onLazyLoad)="getEmployeesIn($event)" styleClass="p-datatable-gridlines" [rowHover]="true" [lazy]="true"
+            selectionMode="single" [(selection)]="selectedWorker" 
+            (onRowSelect)="OnRowSingleClick($event)">
+            <ng-template pTemplate="header">
+                <tr class="row-height">
+                    <th >
+                        {{'STT' | localize}}
+                    </th>
+                    <th *ngIf="typeRequest!=4">
+                        {{'EmployeesModalName' | localize}}
+                    </th>
+                    <th *ngIf="typeRequest==4">
+                        {{'ClientName' | localize}}
+                    </th>
+                    <th pSortableColumn="identityCard">
+                        {{'IdentityCard' | localize}}
+                    </th>
+                    <th pSortableColumn="effectiveFrom" class="effective-from-column">
+                        {{'EffectiveFrom' | localize}}
+                    </th>
+                    <th pSortableColumn="effectiveTo" class="effective-to-column">
+                        {{'EffectiveTo' | localize}}
+                    </th>
+                    <th pSortableColumn="inDateTime" class="effective-to-column">
+                        {{'InDateTime' | localize}}
+                    </th>
+                    <th pSortableColumn="outDateTime" class="effective-to-column">
+                        {{'OutDateTime' | localize}}
+                    </th>
+                    <th style="text-align: center;">
+                        {{'#' | localize}}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-record="$implicit" let-rowIndex="rowIndex">
+                <tr class="row-td-height" [pSelectableRow]="record">
+                    <td style="width: 7px; text-align: center;">
+                        <span class="p-column-title"> {{'STT' | localize}}</span>
+                        {{rowIndex+1+indexShort}}
+                    </td>
+                    <td class="td-employees-name">
+                        <span class="p-column-title"> {{'EmployeesModalName' |
+                            localize}}</span>
+                        {{record.employeesName}}
+                    </td>
+                    <td>
+                        <span class="p-column-title"> {{'IdentityCard' | localize}}</span>
+                        {{record.identityCard}}
+                    </td>
+                    <td class="td-date-format td-center">
+                        <span class="p-column-title effective-from-column"> {{'EffectiveFrom' | localize}}</span>
+                        {{record.effectiveDateFrom | luxonFormat:'dd/LL/yyyy'}}
+                    </td>
+                    <td class="td-date-format td-center">
+                        <span class="p-column-title effective-to-column"> {{'EffectiveTo' | localize}}</span>
+                        {{record.effestiveDateTo | luxonFormat:'dd/LL/yyyy'}}
+                    </td>
+
+                    <td class="td-date-format td-center">
+                        <span class="p-column-title effective-from-column"> {{'InDateTime' | localize}}</span>
+                        {{record.inDateTime | luxonFormat:'HH:mm dd/LL/yyyy'}}
+                    </td>
+                    <td class="td-date-format td-center">
+                        <span class="p-column-title effective-from-column"> {{'OutDateTime' | localize}}</span>
+                        {{record.outDateTime | luxonFormat:'HH:mm dd/LL/yyyy'}}
+                    </td>
+
+                    <td class="" *ngIf="isIn">
+                        <button (click)="bringModal(record.id, 'WENT_OUT')" pButton pRipple type="button"
+                             class="td-btn-width p-button-sm p-button-raised p-button-success">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </td>
+                    <td class="" *ngIf="!isIn">
+                        <button (click)="bringModal(record.id, 'GOT_IN')" pButton pRipple type="button"
+                            class="td-btn-width p-button-sm p-button-raised">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+            {{'NoData' | localize}}
+        </div>
+        <div class="primeng-paging-container">
+            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                (onPageChange)="getEmployeesIn($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+            </p-paginator>
+            <span class="total-records-count">
+                {{'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount}}
+            </span>
+        </div>
+    </div>
+</div>
+<DetailHistoryEmployeesInOut #DetailHistoryEmployeesInOut [typeRequest]="typeRequest" (modalReloadLoadDetail)="closeEmpty($event)">
+</DetailHistoryEmployeesInOut>

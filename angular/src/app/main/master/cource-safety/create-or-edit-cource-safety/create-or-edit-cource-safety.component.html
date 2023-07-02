@@ -1,0 +1,64 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form [formGroup]="courceSafetyForm" *ngIf="active" #mstSleDeliveryPlaceForm="ngForm" novalidate
+                (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header modal-header-master" style="margin-bottom: 20px;">
+                    <h5 class="modal-title" style="margin-left: 15px;">
+                        <span *ngIf="isEdit">{{l("Edit")}}</span>
+                        <span *ngIf="!isEdit">{{l("Add")}}</span>
+                    </h5>
+                    <button type="button" style="margin-right: 1% !important;" class="close" (click)="close()"
+                        [attr.aria-label]="l('Close')">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body modal-body-master">
+                    <div class="form-group form-group-master form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label for="CourceName">{{"CourceName" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input id="CourceName" formControlName="CourceName" class="form-control" type="text"
+                            name="CourceName" [ngClass]="{'edited': courceSafety.courceName}"
+                            [(ngModel)]="courceSafety.courceName">
+                        <validation-messages [formCtrl]="courceSafetyForm.get('CourceName')"></validation-messages>
+                    </div>
+                    <div class="form-group form-group-master form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label for="EffectiveDateStart">{{"EffectiveDateStart" | localize}} <label class="asterisks_lable_title">*</label>
+                        </label>
+                        <div>
+                            <p-calendar id="EffectiveDateStart" formControlName="EffectiveDateStart" [showIcon]="true" dateFormat="dd/mm/yy"
+                                (ngModel)="effectiveDateStart" inputId="effectivedatestart">
+                            </p-calendar>
+                            <validation-messages [formCtrl]="courceSafetyForm.get('EffectiveDateStart')">
+                            </validation-messages>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-master form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label for="EffectiveDateEnd">{{"EffectiveDateEnd" | localize}} <label class="asterisks_lable_title">*</label>
+                        </label>
+                        <div>
+                            <p-calendar id="EffectiveDateEnd" formControlName="EffectiveDateEnd" [defaultDate]="effectiveDateEnd" [showIcon]="true" dateFormat="dd/mm/yy"
+                                (ngModel)="courceSafety.effectiveDateEnd" inputId="effectivedateend">
+                            </p-calendar>
+                            <validation-messages [formCtrl]="courceSafetyForm.get('EffectiveDateEnd')">
+                            </validation-messages>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-master form-md-line-input form-md-floating-label no-hint">
+                        <label for="textarea">{{"Description" | localize}} </label>
+                        <textarea inputId="textarea" class="textarea-input" formControlName="Description" rows="3" cols="30" 
+                        [(ngModel)]="courceSafety.description"  pInputTextarea></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer modal-footer-master">
+                    <button [disabled]="saving" type="button" class="btn btn-light-primary" (click)="close()"><i
+                            class="fa fa-times"></i>{{"Cancel" | localize}}</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!mstSleDeliveryPlaceForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{"Save" | localize}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

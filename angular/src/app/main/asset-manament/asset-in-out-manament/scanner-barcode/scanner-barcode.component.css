@@ -1,0 +1,80 @@
+.sp-width{
+    width: 165px;
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.height-sp{
+    height: 30px;
+}
+
+.dv-info{
+    margin-top: 15px;
+}
+
+.dv-body-info{
+    width: 75%;
+}
+
+.img-asset{
+    margin-right: 40px;
+}
+
+.img-employees
+{
+    margin-right: 40px;
+    border-radius: 100%;
+}
+
+.sp-input-data{
+    color: black;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.dv-row{
+    margin-bottom: 10px;
+}
+
+.modal-boddy-employees-learned {
+    background: rgba(217, 217, 217, 0.5);
+    padding: 10px;
+    padding-bottom: 0.1% !important;
+}
+
+.distance-row {
+    margin-bottom: 10px;
+}
+
+.div-description {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-bottom: 2%;
+}
+
+.input-textarea-request {
+    margin-left: 19px;
+}
+
+.td-btn-scanner {
+    font-size: 0.875rem;
+    padding: 1.35rem 1.7rem;
+}
+
+.input-check-effect-date{
+    background-color: #e9b0b0 !important;
+}
+
+.span-check-effect-validate{
+    color: rgb(165, 0, 0);
+    margin-left: 10px;
+}
+
+.top-row{
+    margin-top: 20px;
+}
+
+.height-input-request{
+    height: 38.5px;
+}
+

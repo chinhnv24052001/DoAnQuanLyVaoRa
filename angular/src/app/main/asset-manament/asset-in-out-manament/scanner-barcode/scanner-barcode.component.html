@@ -1,0 +1,462 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <form *ngIf="active" #mstSleDeliveryPlaceForm="ngForm" novalidate autocomplete="off">
+        <div class="modal-header modal-header-master " style="margin-bottom: 20px;">
+          <h5 class="modal-title" style="margin-left: 15px;">
+            <span>{{l("ReadQRCode")}}</span>
+          </h5>
+          <button type="button" style="margin-right: 1% !important;" class="close" (click)="close()"
+            [attr.aria-label]="l('Close')">
+            <i aria-hidden="true" class="ki ki-close"></i>
+          </button>
+        </div>
+        <div class="modal-body  modal-boddy-employees-learned">
+          <div class="card card-custom gutter-b">
+            <div class="card-body">
+              <h5> {{l('RequestInfomation')}} (<span *ngIf="statusApproval == 1" style="color: rgb(0, 47, 255);">{{l('RequestApprovaled')}}</span>
+                <span *ngIf="statusApproval != 1" style="color: rgb(255, 2, 2);">{{l('RequestHaveNotBeenApprovaled')}}</span>)</h5>
+              
+              <div class="row distance-row">
+                <div class="col-xl-12 col-sm-12">
+                  <div class="input-group">
+                    <span class="input-group-text left-text sp-width height-input-request">
+                      {{'TitleRequest' |
+                      localize}}</span>
+                    <input [(ngModel)]="qRCodeResult.title" name="TitleRequest" autoFocus
+                      class="form-control m-input height-input-request" [placeholder]="l('')" type="text"
+                      disabled="true">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row distance-row" *ngIf="qRCodeResult.typeRequest != 1 && qRCodeResult.typeRequest != 4">
+                <div class="col-xl-6 col-sm-12">
+                  <div class="input-group date-p-calendar">
+                    <span class="input-group-text left-text height-input-request sp-width">
+                      {{'VenderName' |
+                      localize}}</span>
+                    <input [(ngModel)]="qRCodeResult.venderName" name="VenderName" autoFocus
+                      class="form-control m-input height-input-request" [placeholder]="l('')" type="text"
+                      disabled="true">
+                  </div>
+                </div>
+                <div class="col-xl-6 col-sm-12">
+                  <div class="input-group">
+                    <span class="input-group-text left-text sp-width height-input-request">
+                      {{'DateRequest' |
+                      localize}}</span>
+                    <input [(ngModel)]="qRCodeResult.dateRequest" name="DateRequest" autoFocus
+                      class="form-control m-input height-input-request" [placeholder]="l('')" type="text"
+                      disabled="true">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row distance-row">
+                <div class="col-xl-6 col-sm-12">
+                  <div class="input-group date-p-calendar">
+                    <span class="input-group-text left-text height-input-request sp-width">
+                      {{'RequestCode' |
+                      localize}}</span>
+                    <input [(ngModel)]="qRCodeResult.requestCode" name="RequestCode" autoFocus
+                      class="form-control m-input height-input-request" [placeholder]="l('')" type="text"
+                      disabled="true">
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-sm-12">
+                  <div class="input-group date-p-calendar">
+                    <span class="input-group-text left-text height-input-request sp-width">
+                      {{'TypeRequest' |
+                      localize}}</span>
+                    <input [(ngModel)]="typeRequestName" value="typeRequestName" name="TypeRequest" autoFocus
+                      class="form-control m-input height-input-request" [placeholder]="l('')" type="text"
+                      disabled="true">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row distance-row" *ngIf="qRCodeResult.typeRequest == 1 || qRCodeResult.typeRequest == 4">
+                <div class="col-xl-6 col-sm-12">
+                  <div class="input-group">
+                    <span class="input-group-text left-text sp-width height-input-request">
+                      {{'DateRequest' |
+                      localize}}</span>
+                    <input [(ngModel)]="qRCodeResult.dateRequest" name="DateRequest" autoFocus
+                      class="form-control m-input height-input-request" [placeholder]="l('')" type="text"
+                      disabled="true">
+                  </div>
+                </div>
+                <div class="col-xl-6 col-sm-12" *ngIf="qRCodeResult.typeRequest == 4">
+                  <div class="input-group date-p-calendar">
+                      <span class="input-group-text left-text height-input-request sp-width">
+                          {{'DepartmentClient' |
+                          localize}}</span>
+                      <input [(ngModel)]="qRCodeResult.departmentClient" name="DepartmentClient"
+                          autoFocus class="form-control m-input height-input-request"
+                          [placeholder]="l('')" type="text" disabled="true">
+                  </div>
+              </div>
+              </div>
+
+              <div class="row distance-row">
+                <div class="col-xl-6 col-sm-12">
+                    <div class="input-group date-p-calendar">
+                        <span
+                            *ngIf="qRCodeResult.typeRequest ==1 || qRCodeResult.typeRequest ==3"
+                            class="input-group-text left-text height-input-request sp-width">
+                            {{'PersonSignAsset' |
+                            localize}}</span>
+
+                        <span *ngIf="qRCodeResult.typeRequest ==2"
+                            class="input-group-text left-text height-input-request sp-width">
+                            {{'PersonInChargeOfSubName' |
+                            localize}}</span>
+
+                        <span *ngIf="qRCodeResult.typeRequest ==4"
+                            class="input-group-text left-text height-input-request sp-width">
+                            {{'RegisterRepresentative' |
+                            localize}}</span>
+
+                        <input [(ngModel)]="qRCodeResult.personInChargeOfSubName"
+                            name="personInChargeOfSubName"
+                            class="form-control m-input height-input-request" [placeholder]="l('')"
+                            type="text" disabled="true">
+                    </div>
+                </div>
+
+                <div class="col-xl-6 col-sm-12">
+                    <div class="input-group date-p-calendar">
+                        <span *ngIf="qRCodeResult.typeRequest ==2"
+                            class="input-group-text left-text height-input-request sp-width">
+                            {{'PersonInChangeOfSubPhone' |
+                            localize}}</span>
+
+                        <span *ngIf="qRCodeResult.typeRequest !=2"
+                            class="input-group-text left-text height-input-request sp-width">
+                            {{'PhoneNumber' |
+                            localize}}</span>
+
+                        <input [(ngModel)]="qRCodeResult.personInChangeOfSubPhone"
+                            name="personInChangeOfSubPhone" autoFocus
+                            class="form-control m-input height-input-request" [placeholder]="l('')"
+                            type="text" disabled="true">
+                    </div>
+                </div>
+            </div>
+
+              <div class="row distance-row" *ngIf="qRCodeResult.typeRequest != 1 && qRCodeResult.typeRequest != 4">
+                <div class="col-xl-6 col-sm-12">
+                  <div class="input-group date-p-calendar">
+                    <span class="input-group-text left-text height-input-request sp-width">
+                      {{'LiveMonitorName' |
+                      localize}}</span>
+                    <input [(ngModel)]="qRCodeResult.liveMonitorName" name="LiveMonitorName" autoFocus
+                      class="form-control m-input height-input-request" [placeholder]="l('')" type="text"
+                      disabled="true">
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-sm-12">
+                  <div class="input-group date-p-calendar">
+                    <span class="input-group-text left-text height-input-request sp-width">
+                      {{'LiveMonitorPhoneNumber' |
+                      localize}}</span>
+                    <input [(ngModel)]="qRCodeResult.liveMonitorPhoneNumber" name="LiveMonitorPhoneNumber" autoFocus
+                      class="form-control m-input height-input-request" [placeholder]="l('')" type="text"
+                      disabled="true">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row distance-row" *ngIf="qRCodeResult.typeRequest != 1 && qRCodeResult.typeRequest != 4">
+                <div class="col-xl-6 col-sm-12">
+                  <div class="input-group date-p-calendar">
+                    <span class="input-group-text left-text height-input-request sp-width">
+                      {{'LiveMonitorDepartment' |
+                      localize}}</span>
+                    <input [(ngModel)]="qRCodeResult.liveMonitorDepartment" name="LiveMonitorDepartment" autoFocus
+                      class="form-control m-input height-input-request" [placeholder]="l('')" type="text"
+                      disabled="true">
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-sm-12" *ngIf="qRCodeResult.typeRequest != 1">
+                  <div class="input-group date-p-calendar">
+                    <span *ngIf="qRCodeResult.typeRequest == 3"
+                      class="input-group-text left-text height-input-request sp-width">
+                      {{'WhereToBring' |
+                      localize}}</span>
+                    <span *ngIf="qRCodeResult.typeRequest == 2"
+                      class="input-group-text left-text height-input-request sp-width">
+                      {{'WhereToWork' |
+                      localize}}</span>
+                    <input [(ngModel)]="qRCodeResult.whereToBring" name="WhereToBring" autoFocus
+                      class="form-control m-input height-input-request" [placeholder]="l('')" type="text"
+                      disabled="true">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row distance-row" *ngIf="qRCodeResult.typeRequest == 4">
+                <div class="col-xl-12 col-sm-12">
+                    <div class="input-group">
+                        <span class="input-group-text left-text sp-width height-input-request">
+                            {{'TradeUnionOrganization' |
+                            localize}}</span>
+                        <input [(ngModel)]="qRCodeResult.tradeUnionOrganization" name="TradeUnionOrganization"
+                            autoFocus class="form-control m-input height-input-request"
+                            [placeholder]="l('')" type="text" disabled="true">
+                    </div>
+                </div>
+            </div>
+
+              <div class="input-group col-xl-12 col-sm-12 div-description">
+                <span class="input-group-text left-text sp-width"> {{'Description' |
+                  localize}}</span>
+                <textarea inputId="Description" class="textarea-input form-control" rows="3" cols="30"
+                  [(ngModel)]="qRCodeResult.description" pInputTextarea disabled="true">
+                    </textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-custom gutter-b">
+            <div class="card-body">
+              <h5 *ngIf="qRCodeResult.firstItemString=='a'"> {{l('AssetInfomation')}}</h5>
+              <h5 *ngIf="qRCodeResult.firstItemString=='e'"> {{l('EmployeesInfomation')}}</h5>
+
+              <!--Asset-->
+              <div class="row dv-info">
+                <img class="img-asset" name="assetImage" *ngIf="qRCodeResult.firstItemString=='a'"
+                  [src]="'data:image/jpg;base64,' + qRCodeResult.assetInfo.assetImage" width='200' height='200'>
+
+                <div class="dv-body-info">
+                  <div class="row distance-row dv-row top-row" *ngIf="qRCodeResult.firstItemString=='a'">
+                    <div class="col-xl-6 col-sm-12">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'AssetName' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="AsserName">
+                          {{qRCodeResult.assetInfo.assetName}}</span>
+                      </div>
+                    </div>
+                    <!-- <div class="col-xl-6 col-sm-12">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'SeriNumber' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="SeriNumber">
+                          {{qRCodeResult.assetInfo.seriNumber}}</span>
+                      </div>
+                    </div> -->
+                  </div>
+
+                  <div class="row distance-row" *ngIf="qRCodeResult.firstItemString=='a'">
+                    <div class="col-xl-6 col-sm-12">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'TagCode' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="TagCode">
+                          {{qRCodeResult.assetInfo.tagCode}}</span>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-12">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'Total' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="Total">
+                          {{qRCodeResult.assetInfo.total}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row distance-row" *ngIf="qRCodeResult.firstItemString=='a'">
+                    <div class="col-xl-6 col-sm-12">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'StartDate' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="dateStart">
+                          {{qRCodeResult.assetInfo.dateStart}}</span>
+                      </div>
+                    </div>
+
+                    <div class="col-xl-6 col-sm-12" *ngIf="!qRCodeResult.assetInfo.aviationIsBack">
+                      <div class="input-group" [ngClass]="!qRCodeResult.assetInfo.checkEffectDate ? 'input-check-effect-date':''">
+                        <span 
+                          class=" left-text sp-width height-sp">
+                          {{'EndDate' |
+                          localize}}:</span>
+                        <span
+                          class=" left-text height-sp sp-input-data" name="dateEnd">
+                          {{qRCodeResult.assetInfo.dateEnd}}</span>
+                      </div>
+                      <!-- <span class="span-check-effect-validate" *ngIf="!qRCodeResult.assetInfo.checkEffectDate">{{'CheckEffectVatliDate' |localize}}</span> -->
+                    </div>
+
+                     <div class="col-xl-6 col-sm-12" *ngIf="qRCodeResult.assetInfo.aviationIsBack">
+                      <div class="input-group" style="background-color: rgb(255, 187, 0);">
+                        <span class=" left-text sp-width height-sp" > 
+                          {{'EndDate' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="dateEndAvia">
+                          {{qRCodeResult.assetInfo.aviationIsBackString}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row distance-row" *ngIf="qRCodeResult.firstItemString=='a'">
+                    <div class="col-xl-6 col-sm-12" *ngIf="!qRCodeResult.isIn">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'DateInModal' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="DateInModal">
+                          {{qRCodeResult.assetInfo.dateIn}}</span>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-12" *ngIf="qRCodeResult.isIn">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'DateOutModal' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="DateOutModal">
+                          {{qRCodeResult.assetInfo.dateOut}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--Employees-->
+              <div class="row dv-info">
+                <img class="img-employees" name="employeesImage" *ngIf="qRCodeResult.firstItemString=='e'"
+                  [src]="'data:image/jpg;base64,' + qRCodeResult.employeesInfo.employeesImage" width='200' height='200'>
+
+                <div class="dv-body-info">
+
+                  <div class="row distance-row dv-row top-row" *ngIf="qRCodeResult.firstItemString=='e'">
+                    <div class="col-xl-6 col-sm-12">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'EmployeesName' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="EmployeesName">
+                          {{qRCodeResult.employeesInfo.employeesName}}</span>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-12">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'IdentityCard' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="IdentityCard">
+                          {{qRCodeResult.employeesInfo.identityCard}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row distance-row" *ngIf="qRCodeResult.firstItemString=='e'">
+                    <div class="col-xl-6 col-sm-12">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'PhoneNumber' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="PhoneNumber">
+                          {{qRCodeResult.employeesInfo.phoneNumber}}</span>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-12">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'Address' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="Address">
+                          {{qRCodeResult.employeesInfo.address}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row distance-row" *ngIf="qRCodeResult.firstItemString=='e'">
+                    <div class="col-xl-6 col-sm-12">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'StartDate' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="StartDate">
+                          {{qRCodeResult.employeesInfo.dateStart}}</span>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-12">
+                      <div class="input-group">
+                        <span [ngClass]="!qRCodeResult.employeesInfo.checkEffectDate ? 'input-check-effect-date':''"
+                          class=" left-text sp-width height-sp">
+                          {{'EndDate' |
+                          localize}}:</span>
+                        <span [ngClass]="!qRCodeResult.employeesInfo.checkEffectDate ? 'input-check-effect-date':''"
+                          class=" left-text height-sp sp-input-data" name="dateEnd">
+                          {{qRCodeResult.employeesInfo.dateEnd}}
+                        </span>
+                      </div>
+                      <!-- <span class="span-check-effect-validate" *ngIf="!qRCodeResult.employeesInfo.checkEffectDate">{{'CheckEffectVatliDate' |localize}}</span> -->
+                    </div>
+                  </div>
+
+                  <div class="row distance-row" *ngIf="qRCodeResult.firstItemString=='e'">
+                    <div class="col-xl-6 col-sm-12" *ngIf="!qRCodeResult.isIn">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'DateIn' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="DateIn">
+                          {{qRCodeResult.employeesInfo.dateIn}}</span>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-12" *ngIf="qRCodeResult.isIn">
+                      <div class="input-group">
+                        <span class=" left-text sp-width height-sp">
+                          {{'DateOut' |
+                          localize}}:</span>
+                        <span class=" left-text height-sp sp-input-data" name="DateOut">
+                          {{qRCodeResult.employeesInfo.dateOut}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer modal-footer-master">
+          <button *ngIf="statusApproval == 1 && (qRCodeResult.isIn && qRCodeResult.firstItemString=='a' && !qRCodeResult.assetInfo.aviationIsBack) " icon="fa fa-edit" pRipple pButton
+            type="button" class="p-button-sm p-button-raised td-btn-scanner" label="{{l('CheckIn')}}"
+            (click)="checkInOut(qRCodeResult.firstItemString, qRCodeResult.assetInfo.assetIOId, qRCodeResult.isIn, 'IN')">
+          </button>
+          <button *ngIf="statusApproval == 1 && qRCodeResult.isIn&&qRCodeResult.firstItemString=='e'" icon="fa fa-edit" pRipple pButton
+            type="button" class="p-button-sm p-button-raised td-btn-scanner" label="{{l('CheckIn')}}"
+            (click)="checkInOut(qRCodeResult.firstItemString, qRCodeResult.employeesInfo.employeesIOId, qRCodeResult.isIn, 'IN')">
+          </button>
+
+          <button *ngIf="((!qRCodeResult.isIn && qRCodeResult.firstItemString=='a') || qRCodeResult.firtStatusInOut) && !qRCodeResult.assetInfo.aviationIsBack && statusApproval == 1" icon="fa fa-edit" pRipple pButton
+            type="button" label="{{l('CheckOut')}}" class="p-button-sm p-button-raised td-btn-scanner p-button-success"
+            (click)="checkInOut(qRCodeResult.firstItemString, qRCodeResult.assetInfo.assetIOId, qRCodeResult.isIn, 'OUT')">
+          </button>
+          <button *ngIf="statusApproval == 1 && !qRCodeResult.isIn&&qRCodeResult.firstItemString=='e'" icon="fa fa-edit" pRipple pButton
+            type="button" label="{{l('CheckOut')}}" class="p-button-sm p-button-raised td-btn-scanner p-button-success"
+            (click)="checkInOut(qRCodeResult.firstItemString, qRCodeResult.employeesInfo.employeesIOId, qRCodeResult.isIn, 'OUT')">
+          </button>
+
+          <button type="button" class="btn btn-light-primary" (click)="close()"><i class="fa fa-times"></i>{{"Cancel" |
+            localize}}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

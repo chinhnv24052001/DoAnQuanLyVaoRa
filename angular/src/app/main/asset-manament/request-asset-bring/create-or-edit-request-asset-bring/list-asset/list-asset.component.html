@@ -1,0 +1,188 @@
+<form [formGroup]="formAssetRequest" *ngIf="formAssetRequest" novalidate autocomplete="off">
+    <div class="row align-items-center">
+        <div class="col-12 primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+            <div class="dv-row-title">
+                <div style="width: 50%;">
+                    <h5> {{l('ListAsset')}}</h5>
+                </div>
+                <div style="margin-right: 0px; width: 50%;">
+                    <div class="btn-group" dropdown style="float: right !important;">
+                        <button dropdownToggle type="button" class="btn btn-outline-success dropdown-toggle mr-1"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="far fa-file-excel"></i> {{"ImportMoreAsset" | localize}}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-excel-operations" *dropdownMenu>
+                            <a href="javascript:;" class="no-padding">
+                                <span class="fileinput-button">
+                                    <p-fileUpload customUpload="true" name="ExcelFileUpload" #ExcelFileUpload
+                                        maxFileSize="10000000" auto="auto" accept=".csv,.xls,.xlsx"
+                                        (uploadHandler)="uploadExcel($event)" (onError)="onUploadExcelError()"
+                                        chooseLabel="{{'ImportFromExcel' | localize}}">
+                                    </p-fileUpload>
+                                </span>
+                            </a>
+                            <span class="dropdown-item-text text-muted pl-3" href="#">
+                                <small *ngIf="!internal"
+                                    [innerHTML]="l('ImportToExcelSampleFileDownloadInfo', '<a href=/assets/sampleFiles/ImportAsetRequest.xlsx>' + l('ClickHere') + '</a>')">
+                                </small>
+
+                                <small *ngIf="internal"
+                                    [innerHTML]="l('ImportToExcelSampleFileDownloadInfo', '<a href=/assets/sampleFiles/ImportAsetRequestInternal.xlsx>' + l('ClickHere') + '</a>')">
+                                </small>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="th-row-size-3">
+                            {{'AssetName' | localize}} <span class="sp-color">*</span>
+                        </th>
+                        <!-- <th class="th-row-size-3">
+                           {{'SeriNumber' | localize}} 
+                        </th> -->
+                        <th class="th-row-size-3">
+                            {{'TagCode' | localize}} <span class="sp-color">*</span>
+                        </th>
+                        <th class="th-row-size-3">
+                            {{'Total' | localize}} <span class="sp-color">*</span>
+                        </th>
+                        <th class="th-row-size-3">
+                            {{'StartDate' | localize}} <span class="sp-color">*</span>
+                        </th>
+                        <th class="th-row-size-3">
+                                    <span> {{'EndDate' | localize}} <span *ngIf="!internal" class="sp-color">*</span></span>
+                        </th>
+
+                        <th *ngIf="internal" class="th-row-size-2" style="text-align: center;">
+                            <span *ngIf="internal" style=" margin-left: 10px;">{{'AviationIsBack' | localize}} </span>
+                        </th>
+
+                        <th>
+
+                        </th>
+                        <th class="th-row-size-1">
+                            {{'#' | localize}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="assetArray.controls.length" formArrayName="assetList">
+                        <ng-container *ngFor="let val of assetArray.controls; let i = index">
+                            <tr formGroupName="{{i}}" style="height: auto;">
+                                <td>
+                                    <div class="dv-height-mgtop">
+                                        <!-- <select autoFocus size="1" id="AssetId" formControlName="assetId"
+                                            class="form-control height-input-request-table sl-input-table">
+                                            <option *ngFor="let asset of assetList" [value]="asset.value">
+                                                {{asset.label}}</option>
+                                        </select> -->
+                                        <p-dropdown formControlName="assetId" id="AssetId"
+                                            class="p-propdown-input-asset-edit" [options]="assetList"
+                                            optionLabel="label" optionValue="value" [filter]="true" filterBy="label"
+                                            placeholder="{{asset}}">
+                                        </p-dropdown>
+                                        <validation-messages [formCtrl]="assetArray.controls[i].get('assetId')">
+                                        </validation-messages>
+                                    </div>
+                                </td>
+                                <!-- <td>
+                                    <div class="dv-height-mgtop">
+                                        <input pInputText formControlName="seriNumber" style="margin-top: 10px;"
+                                            class="form-control height-input-request-table" type="text">
+                                        <validation-messages [formCtrl]="assetArray.controls[i].get('seriNumber')">
+                                        </validation-messages>
+                                    </div>
+                                </td> -->
+                                <td>
+                                    <div class="dv-height-mgtop">
+                                        <input pInputText formControlName="tagCode" style="margin-top: 10px;"
+                                            class="form-control height-input-request-table" type="text" required>
+                                        <validation-messages [formCtrl]="assetArray.controls[i].get('tagCode')">
+                                        </validation-messages>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="dv-height-mgtop">
+                                        <input pInputText formControlName="total" style="margin-top: 10px;"
+                                            class="form-control height-input-request-table" type="text" required>
+                                        <validation-messages [formCtrl]="assetArray.controls[i].get('total')">
+                                        </validation-messages>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="dv-height-mgtop">
+                                        <p-calendar dateFormat="dd/mm/yy" formControlName="dateStart"
+                                            class="pcld-input-table pcld-create-request-asset">
+                                        </p-calendar>
+                                        <validation-messages [formCtrl]="assetArray.controls[i].get('dateStart')">
+                                        </validation-messages>
+                                    </div>
+                                </td>
+                                <td style="color: rgb(5, 162, 0);">
+                                    <div class="dv-height-mgtop">
+                                        <p-calendar dateFormat="dd/mm/yy" formControlName="dateEnd"
+                                            class="pcld-input-table">
+                                        </p-calendar>
+                                        <validation-messages *ngIf="!internal"
+                                            [formCtrl]="assetArray.controls[i].get('dateEnd')">
+                                        </validation-messages>
+                                        <span class="sp-val-aviationisback"
+                                            *ngIf="internal && assetArray.controls[i].get('dateEnd').value == undefined && !assetArray.controls[i].get('aviationIsBack').value">
+                                            <p class="check-em-iden-val">{{'YouMustBeCheckAviationIsBackOrEnterDateEnd'
+                                                | localize}}</p>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td *ngIf="internal">
+                                    <div class="dv-height-mgtop" style="text-align: center;">
+                                        <input class="input-check-box" type="checkbox" value="AVIATIONISBACK"
+                                            formControlName="aviationIsBack">
+                                    </div>
+                                </td>
+                                <td class="td-upload-image">
+                                    <!-- <img [src]="'data:image/jpg;base64,' + record.viewImage" width='90' height='90'> -->
+                                    <img (click)="viewImageByte(assetArray.controls[i].get('assetImage').value)"
+                                        class="size-img"
+                                        src="data:image/png;base64,{{assetArray.controls[i].get('assetImage').value}}"
+                                        width='60' height='60' />
+                                    <!-- <div class="middle">
+                                        <button (click)="resetInput()" type="button" class="tmss-btn p-button-outlined btn-outline-primary
+                                            ">
+                                            <i class="fa tmss-fa fa-upload mr-1"></i>
+                                            ALOALO
+                                        </button>
+                                    </div> -->
+                                    <!-- <button>abc</button> -->
+                                </td>
+                                <td style="text-align: center; width: 120px;">
+                                    <div class="dv-height-mgtop row">
+
+                                        <p-fileUpload customUpload="true" auto="auto" name="UploadImageAsset"
+                                            #UploadImageAsset accept="image/*"
+                                            (uploadHandler)="uploadAssetImg($event, i)" (onError)="onUploadAssetError()"
+                                            chooseIcon="pi pi-upload" showUploadButton="false" showCancelButton="false"
+                                            chooseLabel=" ">
+                                        </p-fileUpload>
+                                        <button pButton pRipple type="button" (click)="deleteAsset(i)"
+                                            icon="pi pi-trash" class="p-button-rounded p-button-danger ">
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                </tbody>
+            </table>
+            <button pButton type="button" class="ui-button-info add-button-request bt-mg-bt-10" (click)="addAsset()"> <i
+                    class="pi pi-plus"></i>
+                {{"AddModal" | localize}}
+            </button>
+
+        </div>
+    </div>
+</form>
+
+<view-image #viewImage></view-image>

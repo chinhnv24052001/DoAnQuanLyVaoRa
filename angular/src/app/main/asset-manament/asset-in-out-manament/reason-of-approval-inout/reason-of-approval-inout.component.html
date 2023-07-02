@@ -1,0 +1,43 @@
+<!---->
+<div bsModal #reasonOfApproval="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="reasonOfApproval" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-xl dv-mg-top">
+        <div class="modal-content dv-size-popup">
+            <form [formGroup]="formNote" autocomplete="off" #mstSleDeliveryPlaceForm="ngForm" novalidate
+                (ngSubmit)="confirmInOut()">
+                <div class="modal-header modal-header-employees-learned">
+                    <h4 class="modal-title" style="margin-left: 15px;">
+                        <span style="color: brown;">{{l("ReasonOfApproval")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body modal-boddy-employees-learned">
+                    <div [class]="" [busyIf]="isLoading">
+                        <div
+                            class="form-group form-group-master form-md-line-input form-md-floating-label no-hint input-bottom-form form-group-reason">
+                            <label for="NoteTextId">{{"NoteText" | localize}} <label
+                                    class="asterisks_lable_title">*</label> </label><br>
+                            <p-dropdown formControlName="NoteId" class="p-propdown-input-edit" name="NoteId"
+                                [options]="listNoteDropDown" [(ngModel)]="reasonDto.noteId" optionLabel="label"
+                                optionValue="value" [filter]="true" filterBy="label" placeholder="{{selectNoteText}}">
+                            </p-dropdown>
+                            <validation-messages [formCtrl]="formNote.get('NoteId')"></validation-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer modal-footer-master">
+                    <button [disabled]="saving" type="button" class="btn btn-light-primary" (click)="close()"><i
+                            class="fa fa-times"></i>{{"Cancel" | localize}}</button>
+
+                    <button type="submit" class="btn btn-primary" [buttonBusy]="saving"
+                        [disabled]="!mstSleDeliveryPlaceForm.form.valid" [busyText]="l('SavingWithThreeDot')"><i
+                            class="fa fa-check"></i>
+                        <span>{{"ConfirmModal" | localize}}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

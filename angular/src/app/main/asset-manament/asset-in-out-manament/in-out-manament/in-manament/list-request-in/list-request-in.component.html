@@ -1,0 +1,87 @@
+<div class="row align-items-center dv-form" >
+    <div class="col-12 primeng-datatable-container div-form-table" [busyIf]="primengTableHelper.isLoading">
+        <h5> {{l('ListRequest')}}</h5>
+        <!---->
+        <p-table #dataTableAsset dataKey="id" editMode="row" (onLazyLoad)="getRequestIn($event)"
+            [value]="primengTableHelper.records" [rowHover]="true" [lazy]="true" [paginator]="false"
+            styleClass="p-datatable-gridlines" selectionMode="single" [(selection)]="selectedCar" 
+            (onRowSelect)="OnRowSingleClick($event)">
+            <ng-template pTemplate="header">
+                <tr class="row-th-height">
+                    <th>
+                        {{'STT' | localize}}
+                    </th>
+                    <th pSortableColumn="assetName" class="request-code-column">
+                        {{'RequestCode' | localize}}
+                    </th>
+                    <th pSortableColumn="title">
+                        {{'Title' | localize}}
+                    </th>
+                    <th pSortableColumn="typeRequest">
+                        {{'TypeRequest' | localize}}
+                    </th>
+                    <th pSortableColumn="effectiveFrom">
+                        {{'DateRequest' | localize}}
+                    </th>
+                    <th pSortableColumn="effectiveTo">
+                        {{'VenderName' | localize}}
+                    </th>
+                    <th style="text-align: center;">
+                        {{'#' | localize}}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-record="$implicit" let-rowIndex="rowIndex">
+                <tr  [pSelectableRow]="record" class="row-td-height">
+                    <td style="width: 10px; text-align: center;">
+                        <span class="p-column-title"> {{'STT' | localize}}</span>
+                        {{rowIndex+1+indexShort}}
+                    </td>
+                    <td>
+                        <span class="p-column-title request-code-column"> {{'RequestCode' | localize}}</span>
+                        {{record.requestCode}}
+                    </td>
+                    <td>
+                        <span class="p-column-title"> {{'Title' | localize}}</span>
+                        {{record.titleRequest}}
+                    </td>
+                    <td class="td-type-request">
+                        {{record.typeRequest | localize}}
+                    </td>
+                    <td class="td-effective-date td-center">
+                        <span class="p-column-title efective-column"> {{'DateRequest' | localize}}</span>
+                        {{record.effectiveDate | luxonFormat:'dd/LL/yyyy'}}
+                    </td>
+                    <td class="td-vender-name">
+                        <span class="p-column-title"> {{'VenderName' | localize}}</span>
+                        {{record.venderName}}
+                    </td>
+                    <td class="last_column_list_request_io" *ngIf="isIn">
+                        <button (click)="bringModal(record.id, 'OUT')" pButton pRipple type="button" 
+                             class="p-button-sm p-button-raised td-btn-width p-button-success">
+                             <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </td>
+                    <td class="last_column_list_request_io" *ngIf="!isIn">
+                        <button (click)="bringModal(record.id, 'IN')" pButton pRipple type="button"
+                            class="td-btn-width p-button-sm p-button-raised">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+            {{'NoData' | localize}}
+        </div>
+        <div class="primeng-paging-container">
+            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                (onPageChange)="getRequestIn($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+            </p-paginator>
+            <span class="total-records-count">
+                {{'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount}}
+            </span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+<div [@routerTransition]>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'AssetOutManament' | localize">
+        </sub-header>
+        <div [class]="containerClass" [busyIf]="isLoading">
+            <div class="card card-custom gutter-b">
+                <div class="card-body search-body-input">
+                    <form class="form" autocomplete="new-password">
+                        <div style="display: none;">
+                            <!-- <ngx-barcode-scanner [(value)]="value" (valueChange)="onSuccess()"
+                                [codes]="['code_128', 'ean', 'upc', 'upc_e', 'ean_8']" [errorThreshold]="0.1"
+                                (exception)="onError($event)"></ngx-barcode-scanner> -->
+                                <zxing-scanner #scanner start="true" [device]="currentDevice" (scanSuccess)="handleQrCodeResult($event)" 
+                                [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']"></zxing-scanner>
+                        </div>
+                        <div>
+                            <div class="row align-items-center mb-4 dv-mg1">
+                                <div class="col-xl-5 col-sm-12 dv-xl-rqCode">
+                                    <div class="input-group">
+                                        <span for="RequestCode" class="input-group-text sp-width left-text">
+                                            {{'RequestCode' |
+                                            localize}}</span>
+                                        <input id="RequestCode" [(ngModel)]="requestAssetInOutInputDto.requestCode"
+                                            name="RequestCode" class="input-height" autoFocus
+                                            class="form-control m-input" [placeholder]="l('SearchByRequestCode')"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-sm-12">
+                                    <div class="input-group">
+                                        <span for="VenderName" class="input-group-text sp-width left-text">
+                                            {{'VenderName' |
+                                            localize}}
+                                        </span>
+                                        <p-dropdown class="p-propdown-input-out" id="VenderName" name="VenderName" [options]="listVenderDropDown"
+                                        [(ngModel)]="requestAssetInOutInputDto.venderId" optionLabel="label" optionValue="value" [filter]="true" filterBy="label" 
+                                        [formControl]="control">
+                                    </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row align-items-center mb-4">
+                                <div class="col-xl-5 col-sm-12">
+                                    <div class="input-group">
+                                        <span for="IdentityCard" class="input-group-text sp-width left-text">
+                                            {{'IdentityCard' |
+                                            localize}}</span>
+                                        <input id="TagCode" [(ngModel)]="requestAssetInOutInputDto.identityCard"
+                                            name="IdentityCard" class="input-height" autoFocus
+                                            class="form-control m-input" [placeholder]="l('SearchByIdentityCard')"
+                                            type="text">
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-5 col-sm-12">
+                                    <div class="input-group">
+                                        <span for="EmployeesName" class="input-group-text sp-width left-text">
+                                            {{'EmployeesName' |
+                                            localize}}</span>
+                                        <input id="EmployeesName" [(ngModel)]="requestAssetInOutInputDto.employeesName"
+                                            name="EmployeesName" class="input-height" autoFocus
+                                            class="form-control m-input" [placeholder]="l('SearchByEmployeesName')"
+                                            type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mb-4">
+                                <!-- <div class="col-xl-5 col-sm-12">
+                                    <div class="input-group">
+                                        <span for="SeriNumber" class="input-group-text sp-width left-text">
+                                            {{'SeriNumber' |
+                                            localize}}</span>
+                                        <input id="SeriNumber" [(ngModel)]="requestAssetInOutInputDto.seriNumber"
+                                            name="SeriNumber" class="input-height" autoFocus
+                                            class="form-control m-input" [placeholder]="l('SearchBySeriNumber')"
+                                            type="text">
+                                    </div>
+                                </div> -->
+                                <div class="col-xl-5 col-sm-12">
+                                    <div class="input-group">
+                                        <span for="TagCode" class="input-group-text sp-width left-text">
+                                            {{'TagCode' |
+                                            localize}}</span>
+                                        <input id="TagCode" [(ngModel)]="requestAssetInOutInputDto.tagCode"
+                                            name="TagCode" class="input-height" autoFocus class="form-control m-input"
+                                            [placeholder]="l('SearchByTagCode')" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-sm-12">
+                                    <button (click)="getAssetIOManament()" pButton pRipple type="button"
+                                        class="p-button-raised">
+                                        <i class="fa fa-search mr-1"></i>
+                                        {{'Search' | localize}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card card-custom gutter-b">
+                <div class="card-body body-item">
+                    <app-list-request-in-out #ListRequestInOut (modalCallBack)="callBackSelect($event)" [isIn]="isIn"
+                    (modalCallBackApproval)="callBackRequestApproval()" [requestAssetInOutInputDto]="requestAssetInOutInputDto"></app-list-request-in-out>
+                </div>
+            </div>
+            <div class="card card-custom gutter-b">
+                <div class="card-body body-item">
+                    <app-list-asset-in-out #ListAssetInOut [isIn]="isIn" [typeRequest]="typeRequest"
+                        [requestAssetInOutInputDto]="requestAssetInOutInputDto" (modalCall)="callBackApproval()">
+                    </app-list-asset-in-out>
+                </div>
+            </div>
+            <div class="card card-custom gutter-b">
+                <div class="card-body body-item">
+                    <app-list-workers-in-out #ListWorkersInOut [isIn]="isIn" [typeRequest]="typeRequest"
+                        [requestAssetInOutInputDto]="requestAssetInOutInputDto" (modalCall)="callBackApproval()">
+                    </app-list-workers-in-out>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ScannerBarCode #ScannerBarCode (modalBringModal)="bringInOut($event)"></ScannerBarCode>

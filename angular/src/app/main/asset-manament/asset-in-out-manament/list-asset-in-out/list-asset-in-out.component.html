@@ -1,0 +1,115 @@
+<div class="row align-items-center dv-form" id="assetTable">
+    <div class="col-12 primeng-datatable-container div-form-table" [busyIf]="primengTableHelper.isLoading">
+        <h5> {{l('ListAsset')}}</h5>
+        <!---->
+        <p-table #dataTableAsset dataKey="id" editMode="row" (onLazyLoad)="getAssetInOut($event)"
+            [value]="primengTableHelper.records" [rowHover]="true" [lazy]="true" [paginator]="false"
+            styleClass="p-datatable-gridlines" selectionMode="single" [(selection)]="selectedAsset" 
+            (onRowSelect)="OnRowSingleClick($event)" [resizableColumns]="true"
+            [autoLayout]="true">
+            <ng-template pTemplate="header">
+                <tr class="row-th-height">
+                    <th>
+                        {{'STT' | localize}}
+                    </th>
+                    <th pSortableColumn="assetName">
+                        {{'AssetName' | localize}}
+                    </th>
+                    <th pSortableColumn="tagCode">
+                        {{'TagCode' | localize}}
+                    </th>
+                    <!-- <th pSortableColumn="seriNumber">
+                        {{'SeriNumber' | localize}}
+                    </th>-->
+                    <th pSortableColumn="total">
+                        {{'Total' | localize}}
+                    </th> 
+                    <th pSortableColumn="effectiveFrom" class="effective-from-column">
+                        {{'EffectiveFrom' | localize}}
+                    </th>
+                    <th pSortableColumn="effectiveTo" class="effective-to-column">
+                        {{'EffectiveTo' | localize}}
+                    </th>
+
+                    <th pSortableColumn="inDateTimeModal" class="effective-to-column">
+                        {{'InDateTimeModal' | localize}}
+                    </th>
+                    <th pSortableColumn="outDateTimeModal" class="effective-to-column">
+                        {{'OutDateTimeModal' | localize}}
+                    </th>
+
+                    <th style="text-align: center;">
+                        {{'#' | localize}}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-record="$implicit" let-rowIndex="rowIndex">
+                <tr class="row-td-height" [pSelectableRow]="record">
+                    <td style="width: 10px; text-align: center;">
+                        <span class="p-column-title"> {{'STT' | localize}}</span>
+                        {{rowIndex+1+indexShort}}
+                    </td>
+                    <td>
+                        <span class="p-column-title"> {{'AssetName' | localize}}</span>
+                        {{record.assetName}}
+                    </td>
+                    <td class="td-tag-code">
+                        <span class="p-column-title"> {{'TagCode' | localize}}</span>
+                        {{record.tagCode}}
+                    </td>
+                    <!-- <td>
+                        <span class="p-column-title"> {{'SeriNumber' | localize}}</span>
+                        {{record.seriNumber}}
+                    </td> -->
+                    <td class="td-total">
+                        <span class="p-column-title"> {{'Total' | localize}}</span>
+                        {{record.total}}
+                    </td>
+                    <td class="td-date-format td-center">
+                        <span class="p-column-title effective-from-column"> {{'EffectiveFrom' | localize}}</span>
+                        {{record.effectiveDateFrom | luxonFormat:'dd/LL/yyyy'}}
+                    </td>
+                    <td class="td-date-format td-center">
+                        <span class="p-column-title effective-to-column"> {{'EffectiveTo' | localize}}</span>
+                        {{record.effestiveDateTo | luxonFormat:'dd/LL/yyyy'}}
+                    </td>
+                    <td class="td-date-format td-center">
+                        <span class="p-column-title effective-from-column"> {{'InDateTimeModal' | localize}}</span>
+                        {{record.inDateTime | luxonFormat:'HH:mm dd/LL/yyyy'}}
+                    </td>
+                    <td class="td-date-format td-center">
+                        <span class="p-column-title effective-from-column"> {{'OutDateTimeModal' | localize}}</span>
+                        {{record.outDateTime | luxonFormat:'HH:mm dd/LL/yyyy'}}
+                    </td>
+
+                    <td class="last_column_list_asset_io_table td-width-checkout" *ngIf="isIn">
+                        <button (click)="bringModal(record.id, 'OUT')" pButton pRipple type="button" icon="fa fa-sign-out-alt"
+                            label="{{l('CheckOut')}}" class="p-button-sm p-button-raised td-btn-width p-button-success">
+                        </button>
+                    </td>
+                    <td class="last_column_list_asset_io_table td-width-checkin" *ngIf="!isIn">
+                        <button (click)="bringModal(record.id, 'IN')" pButton pRipple type="button"
+                            class="p-button-sm p-button-raised td-btn-width" icon="fa fa-sign-in-alt" label="{{l('CheckIn')}}">
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+            {{'NoData' | localize}}
+        </div>
+        <div class="primeng-paging-container">
+            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                (onPageChange)="getAssetInOut($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+            </p-paginator>
+            <span class="total-records-count">
+                {{'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount}}
+            </span>
+        </div>
+    </div>
+</div>
+<DetailHistoryAssetInOut #DetailHistoryAssetInOut [typeRequest]="typeRequest" (modalReloadLoadDetail)="closeEmpty($event)">
+</DetailHistoryAssetInOut>
+<app-reason-of-approval-inout #ReasonOfApprovalInOut [isLoading]="isLoading" (modalCallBackSetInOut)="callBackReasonOfApproval($event)">
+</app-reason-of-approval-inout>

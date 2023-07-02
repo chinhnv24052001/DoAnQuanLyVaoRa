@@ -1,0 +1,164 @@
+<div [@routerTransition]>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'InOutManament' | localize">
+        </sub-header>
+        <div [class]="containerClass" [busyIf]="isLoading">
+            <div class="card card-custom gutter-b">
+                <div class="card-body search-body-input">
+                    <form class="form" autocomplete="new-password">
+                        <div style="display: none;">
+                             <zxing-scanner #scanner start="true" [device]="currentDevice" (scanSuccess)="handleQrCodeResult($event)"
+                              [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']"></zxing-scanner>
+                          </div>
+                        <div>
+                            <div class="row align-items-center mb-4 dv-mg1">
+                                <div class="col-xl-3 col-sm-12 dv-xl-rqCode">
+                                    <div class="input-group">
+                                        <span for="RequestCode" class="input-group-text sp-width left-text">
+                                            {{'RequestCode' |
+                                            localize}}</span>
+                                        <input id="RequestCode" [(ngModel)]="requestAssetInOutInputDto.requestCode"
+                                            name="RequestCode" class="input-height" autoFocus
+                                            class="form-control m-input" [placeholder]="l('SearchByRequestCode')"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-sm-12">
+                                    <div class="input-group">
+                                        <span for="TagCode" class="input-group-text sp-width left-text">
+                                            {{'TagCode' |
+                                            localize}}</span>
+                                        <input id="TagCode" [(ngModel)]="requestAssetInOutInputDto.tagCode"
+                                            name="TagCode" class="input-height" autoFocus class="form-control m-input"
+                                            [placeholder]="l('SearchByTagCode')" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-3 col-sm-12">
+                                    <div class="input-group">
+                                        <span for="EmployeesName" class="input-group-text sp-width left-text">
+                                            {{'EmployeesName' |
+                                            localize}}</span>
+                                        <input id="EmployeesName" [(ngModel)]="requestAssetInOutInputDto.employeesName"
+                                            name="EmployeesName" class="input-height" autoFocus
+                                            class="form-control m-input" [placeholder]="l('SearchByEmployeesName')"
+                                            type="text">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center mb-4">
+                                <div class="col-xl-3 col-sm-12">
+                                    <div class="input-group">
+                                        <span class="input-group-text sp-width left-text">
+                                            {{'VenderName' |
+                                            localize}}
+                                        </span>
+                                        <p-dropdown class="p-propdown-input-io" id="VenderName" name="VenderName" [options]="listVenderDropDown"
+                                        [(ngModel)]="requestAssetInOutInputDto.venderId" optionLabel="label" optionValue="value" [filter]="true" filterBy="label" 
+                                        >
+                                    </p-dropdown>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-xl-3 col-sm-12">
+                                    <div class="input-group">
+                                        <span for="SeriNumber" class="input-group-text sp-width left-text">
+                                            {{'SeriNumber' |
+                                            localize}}</span>
+                                        <input id="SeriNumber" [(ngModel)]="requestAssetInOutInputDto.seriNumber"
+                                            name="SeriNumber" class="input-height" autoFocus
+                                            class="form-control m-input" [placeholder]="l('SearchBySeriNumber')"
+                                            type="text">
+                                    </div>
+                                </div> -->
+
+                                <div class="col-xl-3 col-sm-12">
+                                    <div class="input-group">
+                                        <span for="IdentityCard" class="input-group-text sp-width left-text">
+                                            {{'IdentityCard' |
+                                            localize}}</span>
+                                        <input id="IdentityCard" [(ngModel)]="requestAssetInOutInputDto.identityCard"
+                                            name="IdentityCard" class="input-height" autoFocus
+                                            class="form-control m-input" [placeholder]="l('SearchByIdentityCard')"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-sm-12">
+                                    <button (click)="getAssetIOManament()" pButton pRipple type="button"
+                                        class="p-button-raised">
+                                        <i class="fa fa-search mr-1"></i>
+                                        {{'Search' | localize}}
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <!--left-in-->
+                <div class="col-md-6 left-in"> 
+                    <div class="dv-header-in">
+                        <div class="row dv-form-radio">
+                            <p-radioButton class="p-radio-btn" name="satus-io" value="IN" [(ngModel)]="ioStatus" inputId="SatusIn"></p-radioButton>
+                            <label class="lb-radio-io" for="SatusIn"><p> <b>{{'InManament' | localize}}</b></p></label>
+                        </div>
+                    </div>
+                    <div class="card card-custom gutter-b">
+                        <div class="card-body body-item">
+                            <app-list-request-in #ListRequestIn (modalCallBack)="callBackSelectIn($event)" [isIn]="false" 
+                              (modalCallBackApproval)="callBackRequestApproval(inManament)"  [requestAssetInOutInputDto]="requestAssetInOutInputDto"></app-list-request-in>
+                        </div>
+                    </div>
+                    <div class="card card-custom gutter-b" id="dv-card-asset-in">
+                        <div class="card-body body-item">
+                            <app-list-asset-in #ListAssetIn [isIn]="false" [typeRequest]="typeRequest"
+                                [requestAssetInOutInputDto]="requestAssetInOutInputDto" (modalCall)="callBackApproval()" (callbackdomAssetInOut)="callbackdomAssetIn($event)" (callbackdomApprovedAssetInOut)="callbackdomApprovedAssetIn($event)"></app-list-asset-in>
+                        </div>
+                    </div>
+                    <div class="card card-custom gutter-b" id="dv-card-employees-in">
+                        <div class="card-body body-item">
+                            <app-list-workers-in #ListWorkersIn [isIn]="false" [typeRequest]="typeRequest"
+                                [requestAssetInOutInputDto]="requestAssetInOutInputDto" (modalCall)="callBackApproval()" (callbackdomEmployeesInOut)="callbackdomEmployeesIn($event)" (callbackdomApprovedEmployeesInOut)="callbackdomAprovedEmployeesIn($event)"></app-list-workers-in>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dv-bulkhead">
+                </div>
+
+                <!--right-out-->
+                <div class="col-md-6 left-out">
+                    <div class="dv-header-out">
+                        <div class="row dv-form-radio">
+                            <p-radioButton class="p-radio-btn" name="satus-io" value="OUT" [(ngModel)]="ioStatus" inputId="SatusOut"></p-radioButton>
+                            <label class="lb-radio-io" for="SatusOut"><p><b>{{'OutManament' | localize}}</b></p></label>
+                        </div>
+                    </div>
+                    <div class="card card-custom gutter-b">
+                        <div class="card-body body-item">
+                            <app-list-request-out #ListRequestOut (modalCallBack)="callBackSelectOut($event)" [isIn]="true" 
+                              (modalCallBackApproval)="callBackRequestApproval(outManament)"  [requestAssetInOutInputDto]="requestAssetInOutInputDto"></app-list-request-out>
+                        </div>
+                    </div>
+                    <div class="card card-custom gutter-b" id="dv-card-asset-out">
+                        <div class="card-body body-item">
+                            <app-list-asset-out #ListAssetOut [isIn]="true" [typeRequest]="typeRequest"
+                                [requestAssetInOutInputDto]="requestAssetInOutInputDto" (modalCall)="callBackApproval()" (callbackdomAssetInOut)="callbackdomAssetOut($event)" (callbackdomApprovedAssetInOut)="callbackdomApprovedAssetOut($event)"></app-list-asset-out>
+                        </div>
+                    </div>
+                    <div class="card card-custom gutter-b" id="dv-card-employees-out">
+                        <div class="card-body body-item">
+                            <app-list-workers-out #ListWorkersOut [isIn]="true" [typeRequest]="typeRequest"
+                                [requestAssetInOutInputDto]="requestAssetInOutInputDto" (modalCall)="callBackApproval()" (callbackdomEmployeesInOut)="callbackdomEmployeesOut($event)" (callbackdomApprovedEmployeesInOut)="callbackdomApprovedEmployeesOut($event)"></app-list-workers-out>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ScannerBarCode #ScannerBarCode (modalBringModal)="bringInOut($event)"></ScannerBarCode>

@@ -1,0 +1,129 @@
+<div class="row m-2">
+    <div class="col-sm-12 text-right">
+        <button type="button" class="btn btn-success" (click)="exportToExcelAuditLogs()"><i
+                class="far fa-file-excel"></i> {{"ExportToExcel" | localize}}
+        </button>
+    </div>
+</div>
+
+<div class="form">
+    <form class="form" autocomplete="new-password">
+        <div class="row align-items-center mb-4 dv-row-asset-out-of-date">
+            <div class="col-xl-5 col-sm-12">
+                <div class="input-group">
+                    <span for="SeriNumber" class="input-group-text sp-width left-text">
+                        {{'TagCode' |
+                        localize}}
+                    </span>
+                    <input id="SeriNumber" [(ngModel)]="seriNumberinout"
+                        name="SeriNumber" autoFocus
+                        class="form-control m-input input-search-asset-out-of-date" [placeholder]="l('SearchBySeriNumber')"
+                        type="text">
+                </div>
+            </div>
+            <div class="col-xl-5 col-sm-12">
+                <div class="input-group">
+                    <span class="input-group-text left-text sp-width sp-height ">
+                        {{'DateInOut' |
+                        localize}}</span>
+                  <p-calendar id="dateInOut" [(ngModel)]="dateInOut"
+                  name="dateInOut" dateFormat="dd/mm/yy" class="pcld-search-height-report pcld-width">
+                    </p-calendar>
+                </div>
+            </div>
+            <button style="margin-left: 20px;" (click)="getAssetInOutAtSeriNumber()" pButton pRipple
+                        type="button" class="p-button-raised bt-class">
+                        <i class="fa fa-search mr-1"></i>
+                        {{'Search' | localize}}
+                    </button>
+        </div>
+
+    </form>
+</div>
+<div class="row align-items-center  dv-form">
+    <div class="col-12 primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+        <h6> {{l('HistoryWorkerInOut')}}</h6>
+        <p-table #dataTable (onLazyLoad)="getAssetInOutAtSeriNumber($event)" [value]="primengTableHelper.records"
+            rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false"
+            styleClass="p-datatable-gridlines" [rowHover]="true" [lazy]="true"
+            [responsive]="primengTableHelper.isResponsive" rows="{{primengTableHelper.defaultRecordsCountPerPage}}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+                        {{'STT' | localize}}
+                    </th>
+                    <th pSortableColumn="assetName">
+                        {{'AssetName' | localize}}
+                    </th>
+                    <th pSortableColumn="seriNumber">
+                        {{'TagCode' | localize}}
+                    </th>
+                    <th pSortableColumn="personSignAsset">
+                        {{'PersonSignAssetNumber' | localize}}
+                    </th>
+                    <th pSortableColumn="requestCode">
+                        {{'RequestCode' | localize}}
+                    </th>
+                    <th pSortableColumn="inDateTimeModal">
+                        {{'InDateTimeModal' | localize}}
+                    </th>
+                    <th pSortableColumn="outDateTimeModal">
+                        {{'OutDateTimeModal' | localize}}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-record="$implicit" let-rowIndex="rowIndex">
+                <tr>
+                    <td style="width: 10px; text-align: center;">
+                        <span class="p-column-title"> {{'STT' | localize}}</span>
+                        {{rowIndex+1+indexShort}}
+                    </td>
+                    <td class="td-format">
+                        <span class="p-column-title"> {{'AssetName' |
+                            localize}}</span>
+                        {{record.assetName}}
+                    </td>
+                    <td class="td-format td-serinumber">
+                        <span class="p-column-title"> {{'TagCode' |
+                            localize}}</span>
+                        {{record.tagCode}}
+                    </td>
+                    <td class="td-format td-serinumber">
+                        <span class="p-column-title"> {{'PersonSignAssetNumber' |
+                            localize}}</span>
+                        {{record.personSignAsset}}
+                    </td> 
+                    <td class="td-format td-serinumber">
+                        <span class="p-column-title"> {{'RequestCode' |
+                            localize}}</span>
+                        {{record.requestCode}}
+                    </td>
+                    <td class="td-format td-date-io">
+                        <span class="p-column-title"> {{'InDateTimeModal' |
+                            localize}}</span>
+                        {{record.inDateTime| luxonFormat:'HH:mm dd/LL/yyyy'}}
+                    </td>
+                    <td class="td-format td-date-io">
+                        <span class="p-column-title"> {{'OutDateTimeModal' |
+                            localize}}</span>
+                        {{record.outDateTime| luxonFormat:'HH:mm dd/LL/yyyy'}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+            {{'NoData' | localize}}
+        </div>
+        <div class="primeng-paging-container">
+            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                (onPageChange)="getAssetInOutAtSeriNumber($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+            </p-paginator>
+            <span class="total-records-count">
+                {{'TotalRecordsCount' |
+                localize:primengTableHelper.totalRecordsCount}}
+            </span>
+        </div>
+    </div>
+    <!--<Primeng-TurboTable-End>-->
+</div>

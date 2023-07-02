@@ -1,0 +1,32 @@
+<!---->
+<div bsModal #reasonOfRefusal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="reasonOfRefusal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog dv-mg-top">
+        <div class="modal-content dv-size-popup">
+            <div class="modal-body body-agree">
+                <!-- <diV class="dv-rim"> -->
+                    <div class="div-box">
+                        <div class="dv-icon-warning">
+                            <i class="fa fa-exclamation-triangle i-icon-format" aria-hidden="true"></i>
+                        </div>
+                        <div class="dv-message">
+                            <span><h4>{{"DataImportError" | localize}}</h4></span>
+                            <table>
+                                <tr *ngFor="let item of listErr; let i=index">
+                                  <td class="td-stt">{{i+1}}</td>
+                                  <th class="th-col-err">{{item.columnErr | localize}}</th>
+                                  <td class="td-err-mes">{{item.mesageErr | localize}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="dv-btn-agree">
+                            <button class="btn-agree" type="button" (click)="close()" class="btn btn-primary">
+                                <span>{{"Agree" | localize}}</span>
+                            </button>
+                        </div>
+                    </div>
+                <!-- </diV> -->
+            </div>
+        </div>
+    </div>
+</div>

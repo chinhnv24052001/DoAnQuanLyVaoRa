@@ -1,0 +1,338 @@
+table {
+    border-spacing: 1;
+    border-collapse: collapse;
+    background: white;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+table * {
+    position: relative;
+}
+
+table td,
+table th {
+    padding-left: 8px;
+}
+
+table thead tr {
+    height: 30px;
+    background: #e6ebf5;
+    font-size: 16px;
+}
+
+.height-input-request-table {
+    height: 30px !important;
+    padding: 3px;
+}
+
+table tbody tr {
+    height: 48px;
+    border-bottom: 1px solid #E3F1D5;
+}
+
+table tbody tr:last-child {
+    border: 1;
+}
+
+table td,
+table th {
+    text-align: left;
+}
+
+table td.l,
+table th.l {
+    text-align: right;
+}
+
+table td.c,
+table th.c {
+    text-align: center;
+}
+
+table td.r,
+table th.r {
+    text-align: center;
+}
+
+.add-button-request {
+    margin-top: 10px;
+    width: 65px;
+    padding: 5px 10px 5px 10px !important;
+}
+
+@media screen and (max-width: 35.5em) {
+    table {
+        display: block;
+    }
+
+    table>*,
+    table tr,
+    table td,
+    table th {
+        display: block;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tbody tr {
+        height: auto;
+        padding: 8px 0;
+    }
+
+    table tbody tr td {
+        padding-left: 45%;
+        margin-bottom: 12px;
+    }
+
+    table tbody tr td:last-child {
+        margin-bottom: 0;
+    }
+
+    table tbody tr td:before {
+        position: absolute;
+        font-weight: 700;
+        width: 40%;
+        left: 10px;
+        top: 0;
+    }
+
+    table tbody tr td:nth-child(1):before {
+        content: "Code";
+    }
+
+    table tbody tr td:nth-child(2):before {
+        content: "Stock";
+    }
+
+    table tbody tr td:nth-child(3):before {
+        content: "Cap";
+    }
+
+    table tbody tr td:nth-child(4):before {
+        content: "Inch";
+    }
+
+    table tbody tr td:nth-child(5):before {
+        content: "Box Type";
+    }
+
+}
+
+.add-button-request {
+    margin-top: 10px;
+    width: 65px;
+    padding: 5px 10px 5px 10px !important;
+}
+
+
+.p-button-rounded {
+    height: 2rem !important;
+    width: 2rem !important;
+}
+
+
+.p-calendar .p-datepicker {
+    min-width: 340px !important;
+    overflow: visible;
+    z-index: 999;
+}
+
+.bt-mg-bt-10 {
+    margin-bottom: 10px;
+}
+
+.dv-height-mgtop {
+    height: 50px;
+    margin-top: 10px;
+}
+
+.sp-color {
+    color: rgb(183, 2, 2);
+}
+
+
+:host ::ng-deep {
+    /*Stlye for Chat Buttons */
+
+    .p-datatable table {
+        width: 100% !important;
+    }
+
+    .dropdown-excel-operations .p-button {
+        display: block;
+        margin: 0;
+        text-align: left;
+        border-radius: 0;
+        transition: none !important;
+        margin-left: -11px;
+        background-color: #fff;
+        color: #181C32 !important;
+        font-size: 13px !important;
+        font-weight: 400 !important;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .dropdown-excel-operations .p-fileupload-choose.p-button.p-state-hover,
+    .p-fileupload-choose.p-button.p-state-focus,
+    .p-fileupload-choose.p-button.p-state-active {
+        background-color: #eee;
+    }
+
+    .dropdown-excel-operations {
+        a:hover {
+
+            span.p-button,
+            div.p-fileupload-buttonbar.p-widget-header.p-corner-top {
+                background-color: #f4f5f8 !important;
+            }
+        }
+
+        a.no-padding {
+            padding: 0px !important;
+        }
+
+        a {
+            .p-button-text {
+                margin-left: 5px !important;
+            }
+        }
+    }
+
+    .dropdown-excel-operations .p-fileupload-choose:not(.p-state-disabled) {
+        border: none;
+    }
+
+    .dropdown-excel-operations .p-fileupload-choose:not(.p-state-disabled):hover,
+    .dropdown-excel-operations .p-fileupload-choose:not(.p-state-disabled):focus,
+    .dropdown-excel-operations .p-fileupload-choose:not(.p-state-disabled):active {
+        background-color: #f4f5f8 !important;
+        color: #b2b1c5;
+        box-shadow: none !important;
+        border: none;
+    }
+
+    .dropdown-excel-operations {
+        div.p-fileupload-buttonbar {
+            &.p-widget-header.p-corner-top {
+                border: none;
+                background: #fff;
+                padding-bottom: 3px !important;
+                padding-top: 3px !important;
+
+                &:hover {
+                    background-color: #f4f5f8 !important;
+                }
+            }
+        }
+
+        div.p-fileupload-content {
+            display: none;
+            padding: 0% !important;
+        }
+
+        div.p-fileupload-content.p-widget-content.p-corner-bottom {
+            display: none;
+        }
+
+        div.p-fileupload-buttonbar {
+            border: none;
+            padding: 0 !important;
+        }
+
+        div.p-fileupload-buttonbar.p-widget-header.p-corner-top:hover {
+            background-color: #f4f5f8 !important;
+        }
+    }
+
+    .p-datatable img.img-circle {
+        height: 24px;
+        margin-right: 5px;
+        box-shadow: 1px 1px 5px 1px hsl(0, 0%, 66%);
+    }
+
+    .btn-size {
+        padding: 8px 8px 8px 8px;
+    }
+
+}
+
+.dv-row-title {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.btn.btn-outline-success {
+    height: 30px;
+    padding: 2px 6px 2px 6px;
+}
+
+.th-row-size-2 {
+    text-align: center;
+    width: 150px;
+}
+
+.th-row-size-3 {
+    text-align: center;
+    width: 200px;
+}
+
+.th-row-size-1 {
+    text-align: center;
+    width: 30px;
+}
+
+:host ::ng-deep {
+    .p-element.p-propdown-input-asset-edit.p-inputwrapper .p-dropdown.p-component {
+        width: 100% !important;
+        height: 30px;
+    }
+
+    .p-element.p-propdown-input-asset-edit.p-inputwrapper .p-dropdown.p-component .ng-tns-c68-33.p-dropdown-label.p-inputtext.p-placeholder.ng-star-inserted {
+        padding: 3px 0 4px 5px !important;
+    }
+
+    .input-group .p-propdown-input.p-drop-down-course .p-dropdown 
+    {
+        height: 32px;
+        width: 300px;
+    }
+
+    .p-propdown-input.p-drop-down-course .p-dropdown .p-dropdown-label {
+        padding-top: 6px;
+    }
+
+}
+
+
+::ng-deep {
+    
+}
+
+.btn-select-employees-by-course {
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+.mb-4,
+.my-4 {
+    margin-bottom: 5px !important;
+}
+
+.p-drop-down-course {
+    margin-left: -220px;
+}
+
+.check-em-iden-val{
+    font-size: 11px;
+    margin-top: 3px;
+    color: #fd397a;
+}
+
+.border-val{
+    border-color: #e24c4c;
+}

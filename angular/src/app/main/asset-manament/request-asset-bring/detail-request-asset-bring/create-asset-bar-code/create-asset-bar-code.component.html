@@ -1,0 +1,37 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}" style="margin-top:20px;">
+    <div class="modal-dialog modal-xs" >
+        <div class="modal-content" >
+            <form *ngIf="active" #mstSleDeliveryPlaceForm="ngForm" novalidate
+                 autocomplete="off">
+                <div  class="modal-header modal-header-master " style="margin-bottom: 20px;">
+                    <h5 class="modal-title" style="margin-left: 15px;">
+                        <span *ngIf="isEdit&&teamItem==1">{{l("BarCodeAsset")}}</span>
+                        <span *ngIf="isEdit&&teamItem==2">{{l("BarCodeEmployees")}}</span>
+                        <span *ngIf="isEdit&&teamItem==4">{{l("BarCodeClient")}}</span>
+                    </h5>
+                    <button type="button" style="margin-right: 1% !important;" class="close" (click)="close()"
+                        [attr.aria-label]="l('Close')">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body modal-body-master" style="text-align: center;">
+                    <b>{{infoBarcode}}</b><br>
+
+                   <img class="size-img" src="data:image/png;base64,{{imageData}}"/>
+                </div>
+
+                <div class="modal-footer modal-footer-master">
+                    <button [disabled]="saving" type="button" class="btn btn-light-primary" (click)="close()"><i
+                            class="fa fa-times"></i>{{"Cancel" | localize}}
+                    </button>
+                    <button pButton type="button" class="btn p-button-warning" (click)="printPage()">
+                        <i class="fa fa-print"></i>
+                        <span>{{"Print" | localize}}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

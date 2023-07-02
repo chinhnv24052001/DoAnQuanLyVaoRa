@@ -1,0 +1,159 @@
+
+<div class="dv-row-title">
+    <div style="width: 50%;">
+        <h5 *ngIf="assetRequest.typeRequest!=4"> {{l('ListEmployees')}}</h5>
+        <h5 *ngIf="assetRequest.typeRequest==4"> {{l('ListClient')}}</h5>
+    </div>
+    <div style="margin-right: 0px; width: 50%;" *ngIf="assetRequest.typeRequest!=4">
+        <div style="float: right !important;" class="row">
+            <div class="row align-items-center mb-4" *ngIf="false">
+                <div class="col-xl-5 col-sm-5">
+                    <div class="input-group">
+                        <p-dropdown class="p-propdown-input p-drop-down-course" name="selectCourseId" [options]="listCourseDropDown" [(ngModel)]="courseId"
+                            optionLabel="label" optionValue="value" [filter]="true" filterBy="label"
+                            placeholder="SearchByCourse">
+                        </p-dropdown>
+                    </div>
+                </div> 
+                <div class="col-xl-3 col-sm-3">
+                    <button (click)="selectEmployeesByCourseId()" pButton pRipple type="button" class="p-button-raised btn-select-employees-by-course">
+                        <i class="fa fa-search mr-1"></i>
+                        {{'SelectModal' | localize}}
+                    </button>
+                </div>
+            </div>
+
+            <div class="btn-group" dropdown >
+                <button dropdownToggle type="button"
+                    class="btn btn-outline-success dropdown-toggle mr-1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <!-- <i *ngIf="assetRequest.typeRequest!=4" class="far fa-file-excel"></i> {{"ImportMoreEmployees" | localize}}
+                    <i *ngIf="assetRequest.typeRequest==4" class="far fa-file-excel"></i> {{"ImportMoreClient" | localize}} -->
+                    <i class="far fa-file-excel"></i> {{"ImportMoreEmployees" | localize}}
+                </button>
+                <div class="dropdown-menu dropdown-menu-right dropdown-excel-operations"
+                    *dropdownMenu>
+                    <a href="javascript:;" 
+                        class="no-padding">
+                        <span class="fileinput-button">
+                            <p-fileUpload customUpload="true" name="ExcelFileUpload"
+                                #ExcelFileUpload maxFileSize="10000000" auto="auto"
+                                accept=".csv,.xls,.xlsx" (uploadHandler)="uploadExcel($event)"
+                                (onError)="onUploadExcelError()"
+                                chooseLabel="{{'ImportFromExcel' | localize}}">
+                            </p-fileUpload>
+                        </span>
+                    </a>
+                    <span class="dropdown-item-text text-muted pl-3" href="#">
+                        <small
+                            [innerHTML]="l('ImportToExcelSampleFileDownloadInfo', '<a href=/assets/sampleFiles/ImportWorkerRequest.xlsx>' + l('ClickHere') + '</a>')">
+                        </small>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="formAssetRequest" *ngIf="formAssetRequest" novalidate autocomplete="off">
+    <div class="row align-items-center">
+        <div class="col-12 primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th class="th-row-size-3" *ngIf="assetRequest.typeRequest!=4">
+                            {{'EmployeesModalName' | localize}} <span class="sp-color">*</span>
+                        </th>
+                        <th class="th-row-size-3" *ngIf="assetRequest.typeRequest==4">
+                            {{'ClientName' | localize}} <span class="sp-color">*</span>
+                        </th>
+                        <th class="th-row-size-3">
+                           {{'IdentityCard' | localize}} <span class="sp-color">*</span>
+                        </th>
+                        <th class="th-row-size-3">
+                            {{'StartDate' | localize}} <span class="sp-color">*</span>
+                        </th>
+                        <th class="th-row-size-3">
+                             {{'EndDate' | localize}} <span class="sp-color">*</span>
+                        </th>
+                        
+                        <th class="th-row-size-1">
+                            {{'#' | localize}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="workersArray.controls.length" formArrayName="workersList">
+                        <ng-container *ngFor="let val of workersArray.controls; let i = index">
+                            <tr style="padding-bottom: 30px;" formGroupName="{{i}}">
+                                <td>
+                                    <div class="dv-height-mgtop">
+                                        <input class="form-control height-input-request-table" type="text"
+                                            formControlName="employeesName">
+                                        <validation-messages [formCtrl]="workersArray.controls[i].get('employeesName')">
+                                        </validation-messages>
+                                    </div>
+ 
+                                </td>
+                                <td>
+                                    <div class="dv-height-mgtop">
+                                        <input [ngClass]="{'border-val' : workersArray.controls[i].get('identityVal').value==1}" class="form-control height-input-request-table"  type="text" (focusout)="callMouseOutEvent(i)"
+                                        (focus)="closeSave()" (focusout)="openSave()" formControlName="identityCard">
+                                        <validation-messages [formCtrl]="workersArray.controls[i].get('identityCard')">
+                                        </validation-messages>
+                                        <span *ngIf="workersArray.controls[i].get('identityVal').value==1"><p class="check-em-iden-val">{{'SafetyExpired' | localize}}</p></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="dv-height-mgtop">
+                                        <!-- <p-calendar  showTime="true" [hourFormat]="24" class="height-input-request" dateFormat="dd/mm/yy"
+                                            inputId="datestart" class="pcld-input-table" formControlName="dateStart">
+                                        </p-calendar> -->
+                                        <p-calendar  class="height-input-request" dateFormat="dd/mm/yy"
+                                            inputId="datestart" class="pcld-input-table" formControlName="dateStart">
+                                        </p-calendar>
+                                        <validation-messages [formCtrl]="workersArray.controls[i].get('dateStart')">
+                                        </validation-messages>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div class="dv-height-mgtop">
+                                        <p-calendar  class="height-input-request" dateFormat="dd/mm/yy"
+                                            inputId="dateend" class="pcld-input-table" formControlName="dateEnd">
+                                        </p-calendar>
+                                        <validation-messages [formCtrl]="workersArray.controls[i].get('dateEnd')">
+                                        </validation-messages>
+                                    </div>
+                                </td>
+                                <!-- <td>
+                                    <div class="dv-height-mgtop">
+                                        
+                                        <input type="file" class="form-control" (change)="onFileChange($event, i)" accept="image/png,image/jpeg,image/jpg" #file>
+                                        
+                                    </div>
+                                </td> -->
+                                <td class="last_column_request_asset_table">
+                                    <div class="dv-height-mgtop">
+                                        <button pButton pRipple type="button" (click)="deleteWorker(i)"
+                                            icon="pi pi-trash" class="p-button-rounded p-button-danger">
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                </tbody>
+            </table>
+            <button pButton type="button" class="ui-button-info add-button-request bt-mg-bt-10" (click)="addWorker()">
+                <i class="pi pi-plus"></i>
+                {{"AddModal" | localize}}
+            </button>
+        </div>
+    </div>
+</form>
+
+<message-agree #messageAgreeComponent [message1]="message1" (modalClose)="closeConfirmCheckEmployees($event)"></message-agree>
+<view-image #viewImage></view-image>

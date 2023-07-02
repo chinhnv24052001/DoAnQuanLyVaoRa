@@ -1,0 +1,46 @@
+<!---->
+<div bsModal #reasonOfRefusal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="reasonOfRefusal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog dv-mg-top">
+        <div class="modal-content dv-size-popup">
+            <div class="modal-body body-agree">
+                <!-- <diV class="dv-rim"> -->
+                <div class="div-box">
+                    <div class="dv-icon-warning">
+                        <i class="fa fa-exclamation-triangle i-icon-format" aria-hidden="true"></i>
+                    </div>
+                    <div class="dv-message">
+                        <span>
+                            <h4>{{l('SelectOptionToCancelRequest')}}</h4>
+                        </span>
+                    </div>
+
+                    <div style="margin-top: 30px">
+                        <button type="button" class="btn btn-light-primary cancel-btn" (click)="close()"><i
+                            class="fa fa-times"></i>{{"Cancel" | localize}}
+                        </button>
+    
+                        <button
+                            (click)="edit()" pButton pRipple type="button"
+                            class="p-button-sm p-button-raised height-btn">
+                            <i class="fa fa-edit"></i>
+                            <span>{{"Edit" | localize}}</span>
+                        </button>
+                        <button pButton pRipple type="button" class="p-button-sm p-button-warning height-btn" 
+                            (click)="saveDraft()">
+                            <i class="fa fa-save"></i>
+                            <span>{{"SaveDraft" | localize}}</span>
+                        </button>
+                        <button
+                             pButton pRipple type="button"
+                            (click)="delete()" class="height-btn p-button-sm p-button-raised p-button-danger">
+                            <i class="fa fa-trash"></i>
+                            <span>{{"Delete" | localize}}</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- </diV> -->
+            </div>
+        </div>
+    </div>
+</div>

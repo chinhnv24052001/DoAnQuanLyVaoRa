@@ -1,0 +1,44 @@
+<!---->
+<div bsModal #reasonOfRefusal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="reasonOfRefusal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-xl dv-mg-top">
+        <div class="modal-content dv-size-popup">
+            <div class="modal-header modal-header-employees-learned">
+                <h4 class="modal-title" style="margin-left: 15px;">
+                    <span *ngIf="rejectOrAppoval == 2">{{l("ReasonForRefusal")}}</span>
+                    <span *ngIf="rejectOrAppoval == 1">{{l("ApprovalInfo")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+
+            <div class="modal-body modal-boddy-employees-learned">
+                <div [class]="" [busyIf]="isLoading">
+                    <form [formGroup]="formReject" *ngIf="formReject" novalidate autocomplete="off" class="form-mg-bt">
+                        <div class="input-group col-xl-12 col-sm-12 div-description">
+
+                            <span *ngIf="rejectOrAppoval == 2" class="input-group-text left-text">{{"WriteReasonForRefusal" | localize}}</span> 
+                            <span *ngIf="rejectOrAppoval == 1" class="input-group-text left-text">{{"AddApprovalInfo" | localize}}</span>
+                            <textarea inputId="reason" class="textarea-input form-control" rows="3"
+                                formControlName="reason" cols="30" pInputTextarea>
+                        </textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer modal-footer-master">
+                <button [disabled]="saving" type="button" class="btn btn-light-primary" (click)="close()"><i
+                        class="fa fa-times"></i>{{"Cancel" | localize}}</button>
+
+                <button *ngIf="rejectOrAppoval == 2" type="button" (click)="ApprovalOrReject()" class="btn btn-danger"
+                    [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-times"></i>
+                    <span>{{"Reject" | localize}}</span></button>
+
+                <button *ngIf="rejectOrAppoval == 1" type="button" (click)="ApprovalOrReject()" class="btn btn-primary"
+                    [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-plane"></i>
+                    <span>{{"ReSend" | localize}}</span></button>
+            </div>
+        </div>
+    </div>
+</div>

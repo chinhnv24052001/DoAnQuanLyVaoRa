@@ -1,0 +1,56 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form [formGroup]="assetForm" *ngIf="active" #mstSleDeliveryPlaceForm="ngForm" novalidate
+                (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header modal-header-master" style="margin-bottom: 20px;">
+                    <h5 class="modal-title" style="margin-left: 15px;">
+                        <span *ngIf="isEdit">{{l("Edit")}}</span>
+                        <span *ngIf="!isEdit">{{l("Add")}}</span>
+                    </h5>
+                    <button type="button" style="margin-right: 1% !important;" class="close" (click)="close()"
+                        [attr.aria-label]="l('Close')">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body modal-body-master">
+                    <div class="form-group form-group-master form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label for="AssetGroupId">{{"AssetGroupName" | localize}} <label class="asterisks_lable_title">*</label> </label><br>
+                        <!-- <select autoFocus size="1" id="AssetGroupId" formControlName="AssetGroupId" class="form-control"
+                            [(ngModel)]="asset.assetGroupId" name="AssetGroupId">
+                            <option *ngFor="let assetGroup of listAssetGroupsDropDown" [value]="assetGroup.value">
+                                {{assetGroup.label}}</option>
+                        </select> -->
+                        <p-dropdown formControlName="AssetGroupId" class="p-propdown-input-edit" name="AssetGroupId" [options]="listAssetGroupsDropDown" [(ngModel)]="asset.assetGroupId"
+                                            optionLabel="label" optionValue="value" [filter]="true" filterBy="label" 
+                                            placeholder="{{selectAssetGroup}}">
+                                        </p-dropdown>
+                        <validation-messages [formCtrl]="assetForm.get('AssetGroupId')"></validation-messages>
+                    </div>
+                    <div class="form-group form-group-master form-md-line-input form-md-floating-label no-hint input-bottom-form">
+                        <label for="AssetName">{{"AssetName" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input id="AssetName" formControlName="AssetName" class="form-control" type="text"
+                            name="AssetName" [ngClass]="{'edited': asset.assetName}" [(ngModel)]="asset.assetName">
+                        <validation-messages [formCtrl]="assetForm.get('AssetName')"></validation-messages>
+                    </div>
+                    <!-- <div class="form-group form-group-master form-md-line-input form-md-floating-label no-hint">
+                        <label for="TagCode">{{"TagCode" | localize}} <label class="asterisks_lable_title">*</label> </label>
+                        <input id="TagCode" formControlName="TagCode" class="form-control" type="text"
+                            name="TagCode" [ngClass]="{'edited': asset.tagCode}" [(ngModel)]="asset.tagCode">
+                        <validation-messages [formCtrl]="assetForm.get('TagCode')"></validation-messages>
+                    </div> -->
+                </div>
+
+                <div class="modal-footer modal-footer-master">
+                    <button [disabled]="saving" type="button" class="btn  btn-default" (click)="close()"><i
+                            class="fa fa-times"></i>{{"Cancel" | localize}}</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!mstSleDeliveryPlaceForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{"Save" | localize}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

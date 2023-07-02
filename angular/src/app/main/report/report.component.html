@@ -1,0 +1,29 @@
+<div [@routerTransition]>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'Report' | localize">
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <tabset>
+                        <tab heading="{{'ReportWorkerInOut' | localize}}">
+                            <WorkerInOutAtDate></WorkerInOutAtDate>
+                        </tab>
+                        <tab heading="{{'ReportCustomerInOut' | localize}}">
+                            <WorkerInOutAtIdentityCard></WorkerInOutAtIdentityCard>
+
+                        </tab>
+                        <tab heading="{{'ListAssetInOutAtSeriNumber' | localize}}">
+                            <ListAssetInOutAtSeriNumber></ListAssetInOutAtSeriNumber>
+
+                        </tab>
+                        <tab heading="{{'AssetOutOfDate' | localize}}">
+                            <AssetOutOfDate></AssetOutOfDate>
+
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

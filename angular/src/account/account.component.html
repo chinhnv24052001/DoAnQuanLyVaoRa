@@ -1,0 +1,41 @@
+<div class="d-flex flex-column flex-root">
+    <div class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-login" id="kt_login">
+        <!-- <div class="login-aside d-flex flex-column flex-row-auto" style="background-color: #F2C98A;"
+            *ngIf="!useFullWidthLayout()">
+
+            <a (click)="goToHome()" href="" class="text-center mb-10">
+                <img *ngIf="!appSession.tenant || !appSession.tenant.logoId" 
+                    [src]="appRootUrl() + 'assets/common/images/asset_manament_photo_login.png'" alt="logo"
+                    class="img-w-h" />
+                <img *ngIf="appSession.tenant && appSession.tenant.logoId"
+                    [src]="remoteServiceBaseUrl + '/TenantCustomization/GetTenantLogo?skin=light&tenantId=' + appSession.tenant.id + '&id=' + appSession.tenant.logoId"
+                    alt="logo" class="max-h-70px" />
+            </a>
+             
+        </div> -->
+        <div [ngClass]="{'login-content': !useFullWidthLayout()}"
+            class="flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
+            <div class="d-flex flex-column-fluid flex-center bgr-login-form" >
+                <div class="login-form login-signin">
+                    <div class="pb-13 pt-lg-0 pt-5">
+                        <a (click)="goToHome()" href="" class="text-center mb-10" *ngIf="useFullWidthLayout()">
+                            <img *ngIf="!appSession.tenant || !appSession.tenant.logoId"
+                                [src]="appRootUrl() + 'assets/common/images/logo-toyota_2022-light.png'" alt="logo"
+                                class="max-h-70px" />
+                            <img *ngIf="appSession.tenant && appSession.tenant.logoId"
+                                [src]="remoteServiceBaseUrl + '/TenantCustomization/GetTenantLogo?skin=light&tenantId=' + appSession.tenant.id + '&id=' + appSession.tenant.logoId"
+                                alt="logo" class="max-h-70px" />
+                        </a>
+                        <div *ngIf="showTenantChange()" class="login__signup-label tenant-change-box">
+                            <tenant-change></tenant-change>
+                        </div>
+                    </div>
+                    <router-outlet></router-outlet>
+                    <div class="dv-language">
+                        <language-switch class=""></language-switch>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

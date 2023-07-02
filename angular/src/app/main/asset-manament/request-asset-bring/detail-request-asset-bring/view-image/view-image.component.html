@@ -1,0 +1,31 @@
+<!---->
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top: 110px;">
+            <form  autocomplete="off">
+                <div class="modal-header modal-header-master" >
+                    <h5 class="modal-title" style="margin-left: 15px;">
+                        <span>{{l("Image")}}</span>
+                    </h5>
+                    <button type="button" style="margin-right: 1% !important;" class="close" (click)="close()"
+                        [attr.aria-label]="l('Close')">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div style="text-align: center;">
+                        <img [src]="'data:image/jpg;base64,' + imageArr" width='400' height='400'>
+                    </div>
+                </div>
+
+                <div class="modal-footer modal-footer-master">
+                    <button type="button" class="btn btn-light-primary" (click)="close()"><i
+                            class="fa fa-times"></i>{{"CancelModal" | localize}}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
